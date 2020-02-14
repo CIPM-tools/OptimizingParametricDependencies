@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="tools.vitruv.applications.pcmjava.modelrefinement.parameters.monitoring.adapter/src"/>
+	<classpathentry excluding="main/java/" kind="src" path="tools.vitruv.applications.pcmjava.modelrefinement.parameters.monitoring/src"/>
+	<classpathentry kind="src" path="tools.vitruv.applications.pcmjava.modelrefinement.parameters.monitoring/src-gen"/>
+	<classpathentry kind="src" path="tools.vitruv.applications.pcmjava.modelrefinement.parameters.monitoring/src/main/java"/>
+	<classpathentry kind="src" path="tools.vitruv.applications.pcmjava.modelrefinement.parameters/src"/>
+	<classpathentry kind="lib" path="tools.vitruv.applications.pcmjava.modelrefinement.parameters.monitoring/lib/kieker-1.13.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="tools.vitruv.applications.pcmjava.modelrefinement.parameters.monitoring/lib/sigar/sigar-1.6.4.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="output" path="tools.vitruv.applications.pcmjava.modelrefinement.parameters.monitoring/bin"/>
+</classpath>

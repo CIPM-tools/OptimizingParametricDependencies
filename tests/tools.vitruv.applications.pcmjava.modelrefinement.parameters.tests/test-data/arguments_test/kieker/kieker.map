@@ -1,0 +1,3 @@
+$0=kieker.common.record.misc.KiekerMetadataRecord
+$1=kieker.common.record.system.CPUUtilizationRecord
+$2=tools.vitruv.applications.pcmjava.modelrefinement.parameters.monitoring.records.ServiceCallRecord

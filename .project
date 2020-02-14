@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>incremental-seff-parameter-estimation-master</name>
+	<comment></comment>
+	<projects>
+		<project>modelrefinement.parameters.root</project>
+	</projects>
+	<buildSpec>
+	</buildSpec>
+	<natures>
+	</natures>
+</projectDescription>
