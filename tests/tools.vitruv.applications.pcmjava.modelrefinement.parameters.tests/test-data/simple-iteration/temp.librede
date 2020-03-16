@@ -228,10 +228,10 @@
     <stepSize value="10.0">
       <unit href="librede:units#SECONDS"/>
     </stepSize>
-    <startTimestamp value="1.5396991646695151E9">
+    <startTimestamp value="1.5840499329251065E9">
       <unit href="librede:units#SECONDS"/>
     </startTimestamp>
-    <endTimestamp value="1.5396992326250472E9">
+    <endTimestamp value="1.5840499989817212E9">
       <unit href="librede:units#SECONDS"/>
     </endTimestamp>
   </estimation>

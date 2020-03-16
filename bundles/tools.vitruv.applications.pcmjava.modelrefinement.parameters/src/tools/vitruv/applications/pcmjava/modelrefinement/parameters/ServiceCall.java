@@ -48,6 +48,13 @@ public interface ServiceCall {
      * @return The service call parameters.
      */
     ServiceParameters getParameters();
+    
+    /**
+     * Gets the service call return value for this execution.
+     * 
+     * @return The service call return value.
+     */
+    ServiceParameters getReturnValue();
 
     /**
      * Gets the service response time.

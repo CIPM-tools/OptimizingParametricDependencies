@@ -17,7 +17,6 @@ import tools.vitruv.applications.pcmjava.modelrefinement.parameters.rd.impl.Libr
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.rd.impl.ResourceDemandModel;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.rd.impl.WekaParametricDependencyEstimationStrategy;
 
-
 public class LibredeResourceDemandEstimationTest {
 
     private WekaParametricDependencyEstimationStrategy modelEstimationStartegy;

@@ -1,9 +1,12 @@
+  
 package tools.vitruv.applications.pcmjava.modelrefinement.parameters.rd.impl;
 
 import java.util.StringJoiner;
 
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.ServiceCall;
+import tools.vitruv.applications.pcmjava.modelrefinement.parameters.util.Utils;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.util.WekaDataSet;
+import weka.classifiers.evaluation.Evaluation;
 import weka.classifiers.functions.LinearRegression;
 import weka.core.Instance;
 import weka.core.Instances;
@@ -15,7 +18,6 @@ public class WekaResourceDemandModel implements ResourceDemandModel {
 
     public WekaResourceDemandModel(final WekaDataSet<Double> dataset) throws Exception {
         this.dataset = dataset;
-        
         this.classifier = new LinearRegression();
         this.classifier.buildClassifier(dataset.getDataSet());
     }
@@ -24,12 +26,6 @@ public class WekaResourceDemandModel implements ResourceDemandModel {
     public LinearRegression getClassifier() {
         return classifier;
     }
-
-
-    public Instances getDataset() {
-        return dataset.getDataSet();
-    }
-
 
     @Override
     public double predictResourceDemand(final ServiceCall serviceCall) {
@@ -63,4 +59,30 @@ public class WekaResourceDemandModel implements ResourceDemandModel {
         }
         return strBuilder.toString();
     }
+
+
+	@Override
+	public WekaDataSet<Double> getDataSet() {
+		return this.dataset;
+	}
+
+
+	@Override
+	public String getStochasticExpression() {
+		return getResourceDemandStochasticExpression();
+	}
+
+
+	@Override
+	public double getError() {
+		Evaluation evaluation = null;
+		try {
+			evaluation = new Evaluation(this.dataset.getDataSet());
+			evaluation.evaluateModel(this.classifier, this.dataset.getDataSet());
+			return evaluation.relativeAbsoluteError();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
 }

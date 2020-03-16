@@ -68,7 +68,7 @@
     <signatures__OperationInterface id="_6VC5gMjOEeiWRYm1yDC5rQ" entityName="methodB1">
       <returnType__OperationSignature xsi:type="repository:PrimitiveDataType" href="pathmap://PCM_MODELS/PrimitiveTypes.repository#//@dataTypes__Repository.0"/>
     </signatures__OperationInterface>
-    <signatures__OperationInterface id="_t-NwkMwMEeiWXYGpzxFH0A" entityName="methodB1"/>
+    <signatures__OperationInterface id="_t-NwkMwMEeiWXYGpzxFH0A" entityName="methodB2"/>
   </interfaces__Repository>
   <interfaces__Repository xsi:type="repository:OperationInterface" id="_uq9Q8MjOEeiWRYm1yDC5rQ" entityName="A">
     <signatures__OperationInterface id="_E6eAEMjPEeiWRYm1yDC5rQ" entityName="methodA">

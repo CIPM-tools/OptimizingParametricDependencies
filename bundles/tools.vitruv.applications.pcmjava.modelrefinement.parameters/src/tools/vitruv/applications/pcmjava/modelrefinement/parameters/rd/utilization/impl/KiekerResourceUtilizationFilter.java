@@ -65,8 +65,6 @@ public final class KiekerResourceUtilizationFilter extends AbstractFilterPlugin 
      * @param record
      *            The record of the specified type.
      */
-    
-    
     @InputPort(
             name = INPUT_PORT_NAME_EVENTS,
             description = "Input for cpu utilization records.",

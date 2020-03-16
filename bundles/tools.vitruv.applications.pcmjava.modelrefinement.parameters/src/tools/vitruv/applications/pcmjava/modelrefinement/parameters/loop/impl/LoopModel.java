@@ -1,5 +1,6 @@
 package tools.vitruv.applications.pcmjava.modelrefinement.parameters.loop.impl;
 
+import tools.vitruv.applications.pcmjava.modelrefinement.parameters.ParameterModel;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.ServiceCall;
 
 /**
@@ -8,7 +9,7 @@ import tools.vitruv.applications.pcmjava.modelrefinement.parameters.ServiceCall;
  * @author JP
  *
  */
-public interface LoopModel {
+public interface LoopModel extends ParameterModel{
 
     /**
      * Predicts the number of loop iterations for this loop based on a service call context.
@@ -18,13 +19,6 @@ public interface LoopModel {
      * @return A predicted number of loop iterations for this loop.
      */
     double predictIterations(ServiceCall serviceCall);
-
-    /**
-     * Gets the stochastic expression of this estimated model.
-     * 
-     * @return The stochastic expression string.
-     */
-    String getIterationsStochasticExpression();
 
     double getError();
 }

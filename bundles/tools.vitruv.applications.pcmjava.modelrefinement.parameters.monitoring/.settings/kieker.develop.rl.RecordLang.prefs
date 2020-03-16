@@ -1,5 +1,5 @@
 BuilderConfiguration.is_project_specific=true
-autobuilding=true
+autobuilding=false
 eclipse.preferences.version=1
 kieker.develop.rl.RecordLang.useProjectSettings=true
 outlet.c.cleanDirectory=true

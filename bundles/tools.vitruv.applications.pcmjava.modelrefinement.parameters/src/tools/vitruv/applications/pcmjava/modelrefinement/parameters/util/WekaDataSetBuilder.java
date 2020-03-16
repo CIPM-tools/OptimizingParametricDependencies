@@ -47,7 +47,7 @@ public class WekaDataSetBuilder<T> {
      * Adds a data instance, consisting of the service parameters and the class value.
      * 
      * @param serviceExecutionId
-     *            The service execution id is used to get the service parameters.
+     *            The service execution id (of the caller) is used to get the service parameters.
      * @param classValue
      *            The class value, like resource demand or loop iteration.
      */
@@ -55,10 +55,15 @@ public class WekaDataSetBuilder<T> {
         if (serviceCalls == null) {
             throw new IllegalArgumentException("No service call data set was specified.");
         }
-        ServiceParameters recordParameters = this.serviceCalls.getParametersOfServiceCall(serviceExecutionId);
-        this.addInstance(recordParameters, classValue, 1.0);
+        ServiceParameters callerParameters = this.serviceCalls.getParametersOfServiceCall(serviceExecutionId);
+        
+        this.addInstance(callerParameters, classValue, 1.0);
     }
     
+    public void addInstanceWithReturnValues(final String serviceExecutionId, ServiceParameters returnValues, final T classValue) {
+    	ServiceParameters callerParameters = this.serviceCalls.getParametersOfServiceCall(serviceExecutionId);
+    	addInstance(callerParameters.merge(returnValues), classValue);
+    }
     public void addInstance(final ServiceParameters recordParameters, final T classValue) {
         this.addInstance(recordParameters, classValue, 1.0);
     }
@@ -73,12 +78,12 @@ public class WekaDataSetBuilder<T> {
     }
     
     public WekaDataSet<T> build() {
-    	WekaDataSet dataSet = new WekaDataSet(this.values, this.mode);
-    	//System.out.println(dataSet.getDataSet().toString());
+    	WekaDataSet<T> dataSet = new WekaDataSet<T>(this.values, this.mode);
         return dataSet;
     }
 
 	public WekaDataSetMode getMode() {
 		return mode;
 	}
+	
 }

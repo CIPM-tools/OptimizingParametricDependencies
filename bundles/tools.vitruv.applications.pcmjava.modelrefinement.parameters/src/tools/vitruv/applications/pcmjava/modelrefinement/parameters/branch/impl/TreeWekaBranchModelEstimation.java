@@ -119,7 +119,7 @@ public class TreeWekaBranchModelEstimation {
 
         WekaDataSet<String> dataset = dataSetBuilder.build();
 
-        return new WekaBranchModel(dataset, this.random,
+        return new WekaBranchModel(dataset,
                 this.branchExecutions.getBranchNotExecutedId());
     }
 
@@ -160,6 +160,18 @@ public class TreeWekaBranchModelEstimation {
                 return "false";
             }
         }
+
+		@Override
+		public WekaDataSet<String> getDataSet() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public String getStochasticExpression() {
+			// TODO Auto-generated method stub
+			return null;
+		}
 
     }
 }

@@ -17,8 +17,8 @@ public class Main {
 
     public static void main(final String[] args) throws IOException {
 
-        //MonitoringController.getInstance().schedulePeriodicSampler(
-                //cpuSampler, 0, 1, TimeUnit.SECONDS);
+        MonitoringController.getInstance().schedulePeriodicSampler(
+                cpuSampler, 0, 1, TimeUnit.SECONDS);
 
         System.out.println("Set processor affinity to CPU 0 and press enter.");
         System.in.read();

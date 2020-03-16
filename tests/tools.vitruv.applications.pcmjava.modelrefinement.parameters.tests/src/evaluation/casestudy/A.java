@@ -1,5 +1,6 @@
 package evaluation.casestudy;
 
+import evaluation.dependencies.Action;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.monitoring.ServiceParameters;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.monitoring.ThreadMonitoringController;
 
@@ -56,7 +57,7 @@ public class A {
                 // Monitoring actions end
 
                 c.setCallerId("_P1p-cMjTEeiWRYm1yDC5rQ");
-                result += this.externalB.methodB1(a);
+                result += this.externalB.methodB1();
             }
 
             c.logBranchOnIteration(Mode.Iteration0, "_VTWLoMjSEeiWRYm1yDC5rQ", ___executedBranchId_1);

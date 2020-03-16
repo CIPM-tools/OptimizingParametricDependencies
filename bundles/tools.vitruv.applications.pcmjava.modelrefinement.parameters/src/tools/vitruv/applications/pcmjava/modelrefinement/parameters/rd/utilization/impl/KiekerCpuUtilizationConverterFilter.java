@@ -8,7 +8,7 @@ import kieker.analysis.plugin.annotation.Property;
 import kieker.analysis.plugin.filter.AbstractFilterPlugin;
 import kieker.common.configuration.Configuration;
 import kieker.common.record.system.CPUUtilizationRecord;
-import kieker.common.record.system.ResourceUtilizationRecord;
+import tools.vitruv.applications.pcmjava.modelrefinement.parameters.monitoring.records.ResourceUtilizationRecord;
 
 /**
  * Kieker monitoring records filter, which filters {@link CPUUtilizationRecord} and transforms them into
@@ -88,10 +88,8 @@ public class KiekerCpuUtilizationConverterFilter extends AbstractFilterPlugin {
         if (record.getCpuID().equals("0") == false) {
             return;
         }
-        ResourceUtilizationRecord transformedRecord = new ResourceUtilizationRecord(
-        		record.getTimestamp(),
-        		this.sessionId, this.resourceId,
-                record.getTotalUtilization());
+        ResourceUtilizationRecord transformedRecord = new ResourceUtilizationRecord(this.sessionId, this.resourceId,
+                record.getTotalUtilization(), record.getTimestamp());
         super.deliver(OUTPUT_PORT_NAME_EVENTS, transformedRecord);
     }
 }

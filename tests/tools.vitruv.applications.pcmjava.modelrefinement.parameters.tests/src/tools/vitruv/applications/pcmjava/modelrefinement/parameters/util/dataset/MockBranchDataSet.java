@@ -37,7 +37,7 @@ public class MockBranchDataSet implements BranchDataSet {
 
     @Override
     public String getBranchNotExecutedId() {
-        return BranchRecord.EXECUTED_BRANCH_ID;
+        return "<not set>";
     }
 
     @Override

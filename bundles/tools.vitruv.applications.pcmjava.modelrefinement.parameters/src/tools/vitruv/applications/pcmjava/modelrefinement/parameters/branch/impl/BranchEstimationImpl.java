@@ -63,7 +63,6 @@ public class BranchEstimationImpl implements BranchEstimation, BranchPrediction 
                     "An estimation for branch with id " + branch.getId() + " was not found.");
         }
         Optional<String> estimatedBranchId = branchModel.predictBranchId(serviceCall);
-
         if (estimatedBranchId.isPresent() == false) {
             return Optional.empty();
         }
@@ -126,7 +125,7 @@ public class BranchEstimationImpl implements BranchEstimation, BranchPrediction 
             LOGGER.warn(
                     "A estimation for branch with id " + branchId + " was not found. Nothing is set for this branch.");
             return;
-        }
+        }        
         String stoEx = branchModel.getBranchStochasticExpression(branch.getId());
         PCMRandomVariable randomVariable = CoreFactory.eINSTANCE.createPCMRandomVariable();
         randomVariable.setSpecification(stoEx);

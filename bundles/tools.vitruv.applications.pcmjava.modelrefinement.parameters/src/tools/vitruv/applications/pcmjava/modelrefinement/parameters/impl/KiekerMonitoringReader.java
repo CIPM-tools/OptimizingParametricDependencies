@@ -1,7 +1,5 @@
 package tools.vitruv.applications.pcmjava.modelrefinement.parameters.impl;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import kieker.analysis.AnalysisController;
@@ -88,12 +86,10 @@ public class KiekerMonitoringReader implements MonitoringDataSet {
     }
 
     public ServiceCallDataSet getExternalServiceCalls() {
-    	ServiceCallDataSet external = this.callRecordFilter;
-    	external.getServiceCalls().removeIf(s -> (!s.getCallerId().isPresent()));
-    	return external;
+        ServiceCallDataSet external = this.callRecordFilter;
+        external.getServiceCalls().removeIf(s -> (!s.getCallerId().isPresent()));
+        return external;
     }
-    
-    
     private void internRead(final String kiekerRecordsDirectoryPath, final Optional<String> sessionId)
             throws Exception {
         // Create Kieker Analysis instance

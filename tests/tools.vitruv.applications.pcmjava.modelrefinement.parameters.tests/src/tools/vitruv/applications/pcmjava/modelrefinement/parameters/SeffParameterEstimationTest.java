@@ -1,12 +1,9 @@
 package tools.vitruv.applications.pcmjava.modelrefinement.parameters;
 
-import java.util.List;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.palladiosimulator.pcm.repository.Repository;
 
-import tools.vitruv.applications.pcmjava.modelrefinement.parameters.data.SimpleTestData;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.impl.KiekerMonitoringReader;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.util.ExportUtils;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.util.PcmUtils;
@@ -18,7 +15,7 @@ public class SeffParameterEstimationTest {
         MonitoringDataSet reader = new KiekerMonitoringReader("./test-data/simple2", "session-1");
         Repository pcmModel = PcmUtils.loadModel("./test-data/simple2/default.repository");
 
-        SeffParameterEstimation estimation = new SeffParameterEstimation();
+        SeffParameterEstimation estimation = new SeffParameterEstimation(true);
         estimation.update(pcmModel, reader);
 
         PcmUtils.saveModel("./test-data/simple2/temp.repository", pcmModel);

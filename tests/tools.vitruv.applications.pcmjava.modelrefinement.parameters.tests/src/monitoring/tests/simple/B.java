@@ -1,5 +1,6 @@
 package monitoring.tests.simple;
 
+import tools.vitruv.applications.pcmjava.modelrefinement.parameters.monitoring.ServiceParameters;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.monitoring.ThreadMonitoringController;
 
 public class B {
@@ -13,7 +14,9 @@ public class B {
 
             // Monitoring actions start
         } finally {
-            ThreadMonitoringController.getInstance().exitService();
+            ServiceParameters returnValue = new ServiceParameters();
+            returnValue.addInt("result", 1);
+            ThreadMonitoringController.getInstance().exitService(returnValue);
         }
         // Monitoring actions end
     }

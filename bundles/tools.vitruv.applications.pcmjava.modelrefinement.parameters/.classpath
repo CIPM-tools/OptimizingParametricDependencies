@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry combineaccessrules="false" kind="src" path="/tools.vitruv.applications.pcmjava.modelrefinement.parameters.optimization"/>
 	<classpathentry exported="true" kind="lib" path="target/dependency/arpack_combined_all.jar"/>
 	<classpathentry exported="true" kind="lib" path="target/dependency/bounce.jar"/>
@@ -47,7 +52,7 @@
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/tools.vitruv.applications.pcmjava.modelrefinement.parameters.monitoring"/>
-	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
+	<classpathentry exported="true" kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
@@ -55,14 +60,7 @@
 			<accessrule kind="accessible" pattern="*"/>
 		</accessrules>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/HP/Downloads/org.sonatype.m2e.mavenarchiver.pomproperties.feature-0.13.0.20110622-1538.jar"/>
 	<classpathentry kind="lib" path="target/dependency/weka-stable.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/Java/jdk-13.0.1/lib/jrt-fs.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

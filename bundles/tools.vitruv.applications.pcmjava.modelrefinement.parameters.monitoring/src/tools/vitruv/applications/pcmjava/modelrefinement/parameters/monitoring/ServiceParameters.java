@@ -76,6 +76,10 @@ public class ServiceParameters {
         }
     }
 
+    public void addList(final String name, final int size) {
+        this.stringBuilder.append("\"").append(name).append("_NUMBER_OF_ELEMENTS\":").append(size).append(",");
+    }
+
     /**
      * Gets the serialized parameters.
      */

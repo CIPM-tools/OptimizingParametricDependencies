@@ -30,14 +30,14 @@ public class LoopIterationEstimationTest {
         this.loopEstimation.update(this.repository, reader.getServiceCalls(), reader.getLoops());
 
         double loopEstimationResult = this.loopEstimation.estimateIterations(this.loopAction,
-                ServiceParametersUtil.buildServiceCall("a", 12));
+                ServiceParametersUtil.buildServiceCall("a_VALUE", 12));
 
         assertEquals(12.0, loopEstimationResult, 10e-5);
     }
 
     @Before
     public void setUpTest() {
-        this.loopEstimation = new LoopEstimationImpl();
+        this.loopEstimation = new LoopEstimationImpl(false);
         this.loopAction = this.createLoopAction();
         this.repository = RepositoryFactory.eINSTANCE.createRepository();
     }

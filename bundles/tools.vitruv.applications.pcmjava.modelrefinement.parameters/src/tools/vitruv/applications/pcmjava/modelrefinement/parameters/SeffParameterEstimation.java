@@ -22,16 +22,17 @@ public class SeffParameterEstimation {
 
     private final ResourceDemandEstimationImpl resourceDemandEstimation;
     
-    private final ArgumentEstimationImpl argumentEstimation;
+    private final ArgumentEstimationImpl argumentEstimation;    
 
     /**
      * Initializes a new instance of {@link SeffParameterEstimation}.
      */
-    public SeffParameterEstimation() {
-        this.loopEstimation = new LoopEstimationImpl();
+    public SeffParameterEstimation(boolean withOpt) {
+    	
+        this.loopEstimation = new LoopEstimationImpl(withOpt);
         this.branchEstimation = new BranchEstimationImpl();
-        this.resourceDemandEstimation = new ResourceDemandEstimationImpl(this.loopEstimation, this.branchEstimation);
-        this.argumentEstimation = new ArgumentEstimationImpl();
+        this.resourceDemandEstimation = new ResourceDemandEstimationImpl(this.loopEstimation, this.branchEstimation, withOpt);
+        this.argumentEstimation = new ArgumentEstimationImpl(withOpt);
     }
 
     /**

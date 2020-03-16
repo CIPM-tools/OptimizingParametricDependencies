@@ -17,7 +17,6 @@ public class KiekerMonitoringReaderTest {
 
         // Check service ids
         Set<String> serviceIds = reader.getServiceCalls().getServiceIds();
-
         Set<String> expectedServiceIds = new HashSet<>();
         expectedServiceIds.add(SimpleTestData.A1ServiceSeffId);
         expectedServiceIds.add(SimpleTestData.B1ServiceSeffId);

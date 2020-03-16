@@ -6,5 +6,5 @@ import tools.vitruv.applications.pcmjava.modelrefinement.parameters.ServiceCallD
 
 public interface ArgumentEstimation {
 
-    void update(Repository pcmModel, ServiceCallDataSet serviceCalls);
+    public void update(Repository pcmModel, ServiceCallDataSet serviceCalls);
 }

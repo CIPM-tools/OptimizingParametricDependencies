@@ -1,6 +1,8 @@
 package tools.vitruv.applications.pcmjava.modelrefinement.parameters.optimization.genetic;
 
+import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -22,13 +24,14 @@ import io.jenetics.prog.op.MathExpr;
 import io.jenetics.prog.op.MathOp;
 import io.jenetics.prog.op.Op;
 import io.jenetics.prog.op.Var;
+import io.jenetics.prog.regression.Complexity;
 import io.jenetics.prog.regression.Error;
 import io.jenetics.prog.regression.LossFunction;
 import io.jenetics.prog.regression.Regression;
 import io.jenetics.prog.regression.Sample;
 import io.jenetics.util.ISeq;
 import io.jenetics.util.RandomRegistry;
-import tools.vitruv.applications.pcmjava.modelrefinement.parameters.arguments.impl.ServiceParameterToOptimize;
+import tools.vitruv.applications.pcmjava.modelrefinement.parameters.ParameterToOptimize;
 
 /**
  * Optimization entry point class
@@ -37,13 +40,13 @@ import tools.vitruv.applications.pcmjava.modelrefinement.parameters.arguments.im
  *
  */
 public class Optimization {
-	private ServiceParameterToOptimize parameter;
+	private ParameterToOptimize parameter;
 	private OptimizationMode mode;
+	private OptimizationConfig config;
 	private ProgramGene<Double> expression;
 	private EvolutionResult<ProgramGene<Double>, Double> result;
 	private Regression<Double> regression;
 	private TreeNode<Op<Double>> tree;
-	private int generations;
 
 	/**
 	 * Constructor for the optimization class
@@ -52,12 +55,12 @@ public class Optimization {
 	 * @param mode        optimization mode
 	 * @param generations number of evolutions/generations
 	 */
-	public Optimization(ServiceParameterToOptimize param, OptimizationMode mode, int generations) {
+	public Optimization(ParameterToOptimize param, OptimizationConfig config) {
 		this.parameter = param;
-		this.mode = mode;
-		this.regression = Regression.of(Regression.codecOf(getOperations(), getTerminals(), 5),
-				Error.of(LossFunction::mse), getSample());
-		this.generations = generations;
+		this.config = config;
+		this.mode = config.optimizationMode;
+		this.regression = Regression.of(Regression.codecOf(getOperations(), getTerminals(), config.exprDepth),
+				Error.of(LossFunction::mse, Complexity.ofNodeCount(config.complexity)), getSample());
 	}
 
 	/**
@@ -85,13 +88,10 @@ public class Optimization {
 		List<Op<Double>> variables = new ArrayList<Op<Double>>();
 		
 		// add the names of all numeric variables	
-		Map<String, List<Object>> attributes = parameter.getNumericAttr();
-		//in reverse order; without the class attribute
-		int counter = attributes.keySet().size()-2;
-		for(Entry<String, List<Object>> attr : attributes.entrySet()) {
+		Map<String, Integer> attributes = parameter.getModel().getDataSet().getAttributesWithIndex();
+		for(Entry<String, Integer> attr : attributes.entrySet()) {
 			if(!attr.getKey().equals("class")) {
-				variables.add(Var.of(attr.getKey(), counter));
-				counter--;
+				variables.add(Var.of(attr.getKey(), attr.getValue()));
 			}
 		}
 		ISeq<Op<Double>> terminals = ISeq.of(variables)
@@ -106,9 +106,12 @@ public class Optimization {
 	 */
 	private Iterable<Sample<Double>> getSample() {
 		List<Sample<Double>> samples = new ArrayList<Sample<Double>>();
-		List<String> instances = this.parameter.getModel().getDataSet().getInstances(true);
-		for (int i = 0; i < instances.size(); i++) {
-			String[] splitInstance = instances.get(i).split(",");
+		List<String> instances = this.parameter.getModel().getDataSet().getInstances();
+		Iterator<String> instancesIterator = instances.iterator();
+		
+		while (instancesIterator.hasNext()) {
+			String instance = instancesIterator.next();
+			String[] splitInstance = instance.split(",");
 			Double[] doubles = new Double[splitInstance.length];
 
 			// transform the instance values to double values
@@ -116,6 +119,7 @@ public class Optimization {
 				doubles[j] = Double.valueOf(splitInstance[j]);
 			}
 			samples.add(Sample.of(doubles));
+			
 		}
 		return samples;
 	}
@@ -143,24 +147,20 @@ public class Optimization {
 				.minimizing()
 				.alterers(new SingleNodeCrossover<>(0.15), new Mutator<>(0.15))
 				.build();
-
-		result = engine.stream(getInitialIndividual(this.parameter.getModel().getArgumentStochasticExpression()))
-				.limit(Limits.byFitnessThreshold(0.01))
-				.limit(generations)
+		
+		result = engine.stream(getInitialIndividual(this.parameter.getModel().getStochasticExpression()))
+				.limit(Limits.byFitnessThreshold(config.fitnessThreshold))
+				.limit(Limits.byExecutionTime(Duration.ofMinutes(config.timeLimit)))
+				.limit(config.generations)
 				.collect(EvolutionResult.toBestEvolutionResult());
 
 		expression = result.getBestPhenotype().getGenotype().getGene();
 
 		// Simplify result program
-		this.tree = Utils.shorten(expression.toTreeNode());
+		this.tree = expression.toTreeNode();
 		MathExpr.rewrite(this.tree);
-		//test();
 	}
-
-	private void test() {
-		MathExpr e = MathExpr.parse("(y_VALUE*x_VALUE)*neg(neg(x_VALUE))");
-		System.out.println(e.eval(2.0, 3.0));
-	}
+	
 	/** 
 	 * Get mathematical expression from tree
 	 * @return mathematical expression
@@ -200,4 +200,9 @@ public class Optimization {
 	public String getOptimizedStochasticExpression() {
 		return new MathExpr(this.tree).toString();
 	}
+	
+//	private void test() {
+//	MathExpr e = MathExpr.parse("0.333 * s_BYTESIZE + (0.167 * x_VALUE + (0.333 * y_VALUE + (6.333)))");
+//	System.out.println(e.eval(11,6,3));
+//}
 }

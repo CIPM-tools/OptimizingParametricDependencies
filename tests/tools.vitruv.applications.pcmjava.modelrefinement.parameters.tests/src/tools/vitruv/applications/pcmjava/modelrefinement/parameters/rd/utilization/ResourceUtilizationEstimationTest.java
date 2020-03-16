@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.palladiosimulator.pcm.repository.Repository;
 import org.palladiosimulator.pcm.resourcetype.ProcessingResourceType;
@@ -63,8 +64,8 @@ public class ResourceUtilizationEstimationTest {
         ResourceUtilizationDataSet results = estimation.estimateRemainingUtilization(reader.getResourceUtilizations());
 
         assertEquals(1.0, reader.getResourceUtilizations().getUtilization(SimpleTestData.ResourceId)
-                .get(1539699172429520175L), 0.00001);
-        assertEquals(0.0, results.getUtilization(SimpleTestData.ResourceId).get(1539699172429520175L),
+                .get(1584049954333991600L), 0.00001);
+        assertEquals(0.0, results.getUtilization(SimpleTestData.ResourceId).get(1584049954333991600L),
                 0.00001);
     }
 }

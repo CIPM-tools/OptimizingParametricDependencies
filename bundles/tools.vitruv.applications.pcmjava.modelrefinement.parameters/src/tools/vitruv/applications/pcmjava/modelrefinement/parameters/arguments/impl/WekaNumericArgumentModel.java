@@ -1,15 +1,18 @@
 package tools.vitruv.applications.pcmjava.modelrefinement.parameters.arguments.impl;
 
-import java.util.StringJoiner;
+import tools.vitruv.applications.pcmjava.modelrefinement.parameters.ServiceCall;
+import tools.vitruv.applications.pcmjava.modelrefinement.parameters.arguments.ArgumentModel;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.util.Utils;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.util.WekaDataSet;
 import weka.filters.Filter;
 import weka.filters.supervised.attribute.AttributeSelection;
+import weka.attributeSelection.BestFirst;
 import weka.attributeSelection.ClassifierSubsetEval;
-import weka.attributeSelection.GreedyStepwise;
 import weka.classifiers.evaluation.Evaluation;
 import weka.classifiers.functions.LinearRegression;
+import weka.core.Instance;
 import weka.core.Instances;
+import weka.core.SelectedTag;
 
 /**
  * Class for the argument model of numeric service parameter
@@ -20,60 +23,29 @@ import weka.core.Instances;
 public class WekaNumericArgumentModel implements ArgumentModel {
 
 	private final LinearRegression linRegClassifier;
-	private final WekaDataSet<Long> dataset;
+	private final WekaDataSet<?> dataset;
 	private final AttributeSelection filter;
 	private final ClassifierSubsetEval evaluator;
-	private final GreedyStepwise search;
+	private final BestFirst search;
 	private final Instances filteredData;
+	private final boolean integerOnly;
 
-	public WekaNumericArgumentModel(final WekaDataSet<Long> dataset) throws Exception {
+	public WekaNumericArgumentModel(final WekaDataSet<?> dataset, boolean intOnly) throws Exception {
 		this.dataset = dataset;
+		this.integerOnly = intOnly;
 		this.linRegClassifier = new LinearRegression();
-
-		// System.out.println(this.dataset.getDataSet().toString());
 
 		// feature selection
 		this.filter = new AttributeSelection();
 		this.evaluator = new ClassifierSubsetEval();
 		evaluator.setClassifier(linRegClassifier);
-		this.search = new GreedyStepwise();
-		search.setSearchBackwards(true);
+		this.search = new BestFirst();
+		search.setDirection(new SelectedTag(2, this.search.TAGS_SELECTION));
 		filter.setEvaluator(evaluator);
 		filter.setSearch(search);
 		filter.setInputFormat(this.dataset.getDataSet());
 		filteredData = Filter.useFilter(this.dataset.getDataSet(), filter);
-
 		this.linRegClassifier.buildClassifier(filteredData);
-	}
-
-	/**
-	 * "Translates" the classifier output into stochastic expression
-	 *
-	 * @return argument stochastic expression string
-	 */
-	@Override
-	public String getArgumentStochasticExpression() {
-		StringJoiner result = new StringJoiner(" + (");
-		double[] coefficients = this.linRegClassifier.coefficients();
-		int braces = 0;
-		for (int i = 0; i < coefficients.length - 2; i++) {
-			double coefficient = Utils.round(coefficients[i], 3);
-			if (coefficient == 0) {
-				continue;
-			}
-			StringBuilder coefficientPart = new StringBuilder();
-			String paramStoEx = this.dataset.getStochasticExpressionForIndex(i);
-
-			coefficientPart.append(coefficient).append(" * ").append(paramStoEx);
-			result.add(coefficientPart.toString());
-			braces++;
-		}
-		result.add(String.valueOf(Utils.round(coefficients[coefficients.length - 1], 3)));
-		StringBuilder strBuilder = new StringBuilder().append(result.toString());
-		for (int i = 0; i < braces; i++) {
-			strBuilder.append(")");
-		}
-		return strBuilder.toString();
 	}
 
 	/**
@@ -98,8 +70,15 @@ public class WekaNumericArgumentModel implements ArgumentModel {
 		return linRegClassifier;
 	}
 
-	public WekaDataSet getDataSet() {
+	public WekaDataSet<?> getDataSet() {
 		return this.dataset;
+	}
+
+	@Override
+	public String getStochasticExpression() {
+		String stoEx = Utils.getStoExLinReg(this.linRegClassifier, this.filteredData);
+		if(integerOnly) return Utils.replaceDoubles(stoEx);
+		else return stoEx;
 	}
 
 }

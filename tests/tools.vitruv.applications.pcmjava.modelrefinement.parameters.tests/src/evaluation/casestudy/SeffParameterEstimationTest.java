@@ -5,6 +5,7 @@ import java.util.Map.Entry;
 import java.util.SortedMap;
 
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.palladiosimulator.pcm.repository.Repository;
 
@@ -12,7 +13,9 @@ import evaluation.utils.CsvWriter;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.LoggingUtil;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.MonitoringDataSet;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.SeffParameterEstimation;
+import tools.vitruv.applications.pcmjava.modelrefinement.parameters.data.SimpleTestData;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.impl.KiekerMonitoringReader;
+import tools.vitruv.applications.pcmjava.modelrefinement.parameters.util.ExportUtils;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.util.PcmUtils;
 
 public class SeffParameterEstimationTest {
@@ -47,7 +50,7 @@ public class SeffParameterEstimationTest {
         
         // iteration 0
         c = new Common(Mode.Iteration0, Mode.Iteration0, name);
-        SeffParameterEstimation estimation = new SeffParameterEstimation();
+        SeffParameterEstimation estimation = new SeffParameterEstimation(false);
 
         MonitoringDataSet readerIteration0 = getReader(c);
         Repository pcmModelIteration0 = loadPcmModel(c);
@@ -69,7 +72,8 @@ public class SeffParameterEstimationTest {
         
         // complete
         c = new Common(Mode.Complete, Mode.Iteration1, name);
-        SeffParameterEstimation estimationComplete = new SeffParameterEstimation();
+        SeffParameterEstimation estimationComplete = new SeffParameterEstimation(true
+                );
 
         MonitoringDataSet readerComplete = getReader(c);
         Repository pcmModelComplete = loadPcmModel(c);

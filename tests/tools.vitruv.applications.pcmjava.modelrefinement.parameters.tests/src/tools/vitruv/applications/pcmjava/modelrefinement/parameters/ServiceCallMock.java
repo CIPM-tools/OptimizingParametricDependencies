@@ -97,4 +97,10 @@ public class ServiceCallMock implements ServiceCall {
         return 0;
     }
 
+    @Override
+    public ServiceParameters getReturnValue() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }

@@ -16,6 +16,7 @@ public class A {
         ServiceParameters serviceParameters = new ServiceParameters();
         serviceParameters.addInt("a", a);
         ThreadMonitoringController.getInstance().enterService("_XYJcUMjPEeiWRYm1yDC5rQ", serviceParameters);
+        int result=0;
         try {
             // Monitoring actions end
 
@@ -34,7 +35,6 @@ public class A {
             long ___loopIterationsCount_1 = 0;
             // Monitoring actions end
 
-            int result = 0;
             for (int i = 0; i < a; i++) {
 
                 // Monitoring actions start
@@ -79,13 +79,14 @@ public class A {
                     ___loopIterationsCount_1);
             // Monitoring actions end
 
-            return result;
-
             // Monitoring actions start
         } finally {
-            ThreadMonitoringController.getInstance().exitService();
+            ServiceParameters returnValue  = new ServiceParameters();
+            returnValue.addInt("result", result);
+            ThreadMonitoringController.getInstance().exitService(returnValue);
         }
         // Monitoring actions end
+        return result;
     }
 
     private void computation(final int param) {

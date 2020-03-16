@@ -60,7 +60,8 @@ public class ThreadMonitoringController {
     /**
      * Calls this method after entering the service. {@link ThreadMonitoringController#exitService()} must be called
      * before exiting the service. Surround the inner code with try finally and call
-     * {@link ThreadMonitoringController#exitService()} inside the finally block .
+     * {@link ThreadMonitoringController#exitService()} inside the finally block . Should be called when the service has
+     * no parameters and no return value
      *
      * @param serviceId
      *            The SEFF Id for the service.
@@ -72,7 +73,8 @@ public class ThreadMonitoringController {
     /**
      * Calls this method after entering the service. {@link ThreadMonitoringController#exitService()} must be called
      * before exiting the service. Surround the inner code with try finally and call
-     * {@link ThreadMonitoringController#exitService()} inside the finally block .
+     * {@link ThreadMonitoringController#exitService()} inside the finally block . Should be called when the service has
+     * some parameters and a return value.
      *
      * @param serviceId
      *            The SEFF Id for the service.
@@ -102,11 +104,18 @@ public class ThreadMonitoringController {
     }
 
     /**
+     * Leaves the current service and writes the monitoring record. Should be called for void services.
+     */
+    public void exitService() {
+        this.exitService(ServiceParameters.EMPTY);
+    }
+
+    /**
      * Leaves the current service and writes the monitoring record.
      * {@link ThreadMonitoringController#enterService(String)} must be called first.
      */
-    public void exitService() {
-        this.currentServiceController.exitService();
+    public void exitService(ServiceParameters returnValue) {
+        this.currentServiceController.exitService(returnValue);
         this.currentServiceIndex -= 1;
         if (this.currentServiceIndex >= 0) {
             this.currentServiceController = this.serviceControllers.get(this.currentServiceIndex);
@@ -211,7 +220,7 @@ public class ThreadMonitoringController {
         private String sessionId;
         private String callerServiceExecutionId;
         private String callerId;
-        private String currentCallerId; // ???
+        private String currentCallerId;
 
         public void enterService(
                 final String serviceId,
@@ -230,7 +239,7 @@ public class ThreadMonitoringController {
             this.currentCallerId = null;
         }
 
-        public void exitService() {
+        public void exitService(ServiceParameters returnValue) {
             final long stopTime = TIME_SOURCE.getTime();
 
             ServiceCallRecord e = new ServiceCallRecord(
@@ -241,8 +250,8 @@ public class ThreadMonitoringController {
                     this.callerServiceExecutionId,
                     this.callerId,
                     this.serviceStartTime,
-                    stopTime,
-                    null);
+                    stopTime);
+            // returnValue.toString());
 
             RECORDS_WRITER.write(e);
         }

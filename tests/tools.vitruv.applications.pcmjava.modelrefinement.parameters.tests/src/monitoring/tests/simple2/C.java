@@ -1,19 +1,13 @@
 package monitoring.tests.simple2;
 
-import kieker.monitoring.core.controller.IMonitoringController;
-import kieker.monitoring.core.controller.MonitoringController;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.monitoring.ServiceParameters;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.monitoring.ThreadMonitoringController;
 
 public class C {
 
-    public void methodA(String s, boolean b) {
-                
+    public void methodA() {
         // Monitoring actions start
         ServiceParameters serviceParameters = new ServiceParameters();
-        serviceParameters.addString("s", s);
-        serviceParameters.addBoolean("b", b);
-       
         ThreadMonitoringController.getInstance().enterService("_SVoyANChEeiG9v0ZHxeEbQ", serviceParameters);
         try {
             // Monitoring actions end

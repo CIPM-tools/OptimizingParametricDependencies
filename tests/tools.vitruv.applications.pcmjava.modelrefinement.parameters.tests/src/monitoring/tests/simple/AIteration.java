@@ -16,12 +16,13 @@ public class AIteration {
         ServiceParameters serviceParameters = new ServiceParameters();
         serviceParameters.addInt("a", a);
         ThreadMonitoringController.getInstance().enterService("_XYJcUMjPEeiWRYm1yDC5rQ", serviceParameters);
+        int result = 0;
         try {
             // Monitoring actions end
 
             this.computation(a);
 
-            int result = 0;
+            
             for (int i = 0; i < a; i++) {
 
                 this.computation(5);
@@ -62,15 +63,16 @@ public class AIteration {
             // Monitoring actions start
             ThreadMonitoringController.getInstance().logBranchExecution("_8icPAMwMEeiWXYGpzxFH0A",
                     ___executedBranchId_1);
-            // Monitoring actions end
-
-            return result;
+            // Monitoring actions end            
 
             // Monitoring actions start
         } finally {
-            ThreadMonitoringController.getInstance().exitService();
+            ServiceParameters returnValue = new ServiceParameters();
+            returnValue.addInt("result", result);
+            ThreadMonitoringController.getInstance().exitService(returnValue);
         }
         // Monitoring actions end
+        return result;
     }
 
     private void computation(final int param) {

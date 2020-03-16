@@ -2,6 +2,7 @@ package tools.vitruv.applications.pcmjava.modelrefinement.parameters.branch.impl
 
 import java.util.Optional;
 
+import tools.vitruv.applications.pcmjava.modelrefinement.parameters.ParameterModel;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.ServiceCall;
 
 /**
@@ -10,7 +11,7 @@ import tools.vitruv.applications.pcmjava.modelrefinement.parameters.ServiceCall;
  * @author JP
  *
  */
-public interface BranchModel {
+public interface BranchModel extends ParameterModel {
 
     /**
      * Predicts the branch transition id for this branch based on a service call context.

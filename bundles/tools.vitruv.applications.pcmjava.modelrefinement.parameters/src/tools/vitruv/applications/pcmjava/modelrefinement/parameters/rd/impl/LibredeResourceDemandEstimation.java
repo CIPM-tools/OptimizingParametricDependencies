@@ -156,11 +156,10 @@ public class LibredeResourceDemandEstimation {
         Map<String, IDataSource> dataSources = Collections.singletonMap(this.dataSourceConfig.getName(),
                 this.dataSource);
         LibredeResults libredeResults = Librede.execute(this.libredeConfig, dataSources);
-        ApproachResult approachResult = libredeResults.getApproachResults(ESTIMATION_APPROACH);
-
+        ApproachResult approachResult = libredeResults.getApproachResults(ESTIMATION_APPROACH); 
         ResourceDemand[] resultResourceDemandIndex = approachResult.getResultOfFold(0).getStateVariables();
         Vector meanResults = approachResult.getMeanEstimates();
-
+        
         Map<String, Map<String, Map<ServiceParameters, Double>>> results = new HashMap<>();
 
         for (int i = 0; i < resultResourceDemandIndex.length; i++) {
@@ -172,7 +171,7 @@ public class LibredeResourceDemandEstimation {
                 resourceEntries = new HashMap<>();
                 results.put(rdInfo.internalActionId, resourceEntries);
             }
-
+            
             Map<ServiceParameters, Double> rdEntries = resourceEntries.get(rdInfo.resourceId);
             if (rdEntries == null) {
                 rdEntries = new HashMap<>();
@@ -256,7 +255,6 @@ public class LibredeResourceDemandEstimation {
 
         List<ResponseTimeRecord> responseTimeRecords = this.responseTimeRepository.getResponseTimes(internalActionId,
                 resourceId);
-
         for (ResponseTimeRecord responseTimeRecord : responseTimeRecords) {
             ServiceParameters parameters = this.serviceCallRepository
                     .getParametersOfServiceCall(responseTimeRecord.getServiceExecutionId());

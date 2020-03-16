@@ -6,9 +6,7 @@ import java.util.Map;
 public class ServiceParametersUtil {
     public static ServiceParameters buildParameters(final String name, final Object value) {
         Map<String, Object> testParameters = new HashMap<>();
-        Map<String, String> testParametersTypes = new HashMap<>();
         testParameters.put(name, value);
-        testParametersTypes.put(name, value.getClass().getName());
         return ServiceParameters.build(testParameters);
     }
 

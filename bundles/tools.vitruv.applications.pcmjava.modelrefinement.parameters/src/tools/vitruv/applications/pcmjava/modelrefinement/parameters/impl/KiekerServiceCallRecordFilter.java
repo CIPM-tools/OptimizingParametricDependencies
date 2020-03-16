@@ -74,6 +74,16 @@ public final class KiekerServiceCallRecordFilter extends AbstractFilterPlugin im
     }
 
     @Override
+    public ServiceParameters getReturnValueOfServiceCall(final String serviceExecutionId) {
+    	ServiceCall executionItem = serviceExecutionIdToCall.get(serviceExecutionId);
+    	 if (executionItem == null) {
+             throw new IllegalArgumentException(
+                     String.format("The service call with id %s does not exist.", serviceExecutionId));
+         }
+    	 return executionItem.getReturnValue();
+    }
+    
+    @Override
     public List<ServiceCall> getServiceCalls() {
         return this.allServiceCalls;
     }
@@ -82,7 +92,12 @@ public final class KiekerServiceCallRecordFilter extends AbstractFilterPlugin im
     public List<ServiceCall> getServiceCalls(final String serviceId) {
         return this.serviceIdToCall.get(serviceId);
     }
-
+    
+    @Override
+    public List<ServiceCall> getServiceCallsByOneCaller(final String serviceId, final String callerId) {
+        return this.callerIdToServiceIdToCall.get(callerId).get(serviceId);
+    }
+    
     @Override
     public Set<String> getServiceIds() {
         return this.serviceIdToCall.keySet();
@@ -150,10 +165,12 @@ public final class KiekerServiceCallRecordFilter extends AbstractFilterPlugin im
 
     private static class KiekerServiceCall implements ServiceCall {
         private final ServiceParameters parameters;
+        private final ServiceParameters returnValue=null;
         private final ServiceCallRecord record;
 
         public KiekerServiceCall(final ServiceCallRecord record) {
             this.parameters = ServiceParameters.buildFromJson(record.getParameters());
+            //this.returnValue = ServiceParameters.buildFromJson(record.getReturnValue());
             this.record = record;
         }        
         
@@ -185,6 +202,11 @@ public final class KiekerServiceCallRecordFilter extends AbstractFilterPlugin im
         public ServiceParameters getParameters() {
             return this.parameters;
         }
+        
+        @Override
+        public ServiceParameters getReturnValue() {
+        	return this.returnValue;
+        }
 
         @Override
         public long getResponseTime() {
@@ -211,4 +233,8 @@ public final class KiekerServiceCallRecordFilter extends AbstractFilterPlugin im
             return time * TIME_TO_SECONDS;
         }
     }
+
+	public Map<String, ArrayList<ServiceCall>> getServiceIdToCall() {
+		return serviceIdToCall;
+	}
 }

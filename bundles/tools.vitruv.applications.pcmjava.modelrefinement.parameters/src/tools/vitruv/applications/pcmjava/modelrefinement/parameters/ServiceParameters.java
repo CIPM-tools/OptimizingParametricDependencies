@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.log4j.Logger;
 
@@ -41,7 +43,7 @@ public class ServiceParameters {
 
     private final SortedMap<String, Object> readOnlyParameters;
 
-    private ServiceParameters() {
+    public ServiceParameters() {
         this.parameters = Collections.emptySortedMap();
         this.readOnlyParameters = Collections.unmodifiableSortedMap(this.parameters);
     }
@@ -119,5 +121,17 @@ public class ServiceParameters {
             LOGGER.warn(String.format("Could not parse parameters %s.", parameters), e);
             return EMPTY;
         }
+    }
+    
+    public ServiceParameters merge(ServiceParameters parametersToAdd) {
+    	Map<String, Object> map3 = Stream.of(this.parameters, parametersToAdd.getParameters())
+    			  .flatMap(map -> map.entrySet().stream())
+    			  .collect(Collectors.toMap(
+    			    Map.Entry::getKey,
+    			    Map.Entry::getValue,
+    			    (v1, v2) -> v1));
+    	
+    	return new ServiceParameters(map3);
+
     }
 }

@@ -22,11 +22,6 @@
     <children xmi:type="notation:Shape" xmi:id="_0ieKVP-qEeiQ5r2ddfy74A" type="2102" fontName="Segoe UI">
       <children xmi:type="notation:DecorationNode" xmi:id="_0ieKVv-qEeiQ5r2ddfy74A" type="5102"/>
       <children xmi:type="notation:DecorationNode" xmi:id="_0ieKV_-qEeiQ5r2ddfy74A" type="7102">
-        <children xmi:type="notation:Node" xmi:id="_3pn-AD64EeqLqsi0TrUSNg" type="3102">
-          <styles xmi:type="notation:HintedDiagramLinkStyle" xmi:id="_3pn-AT64EeqLqsi0TrUSNg" diagramLink="_4urhkD64EeqLqsi0TrUSNg" hint="PCM SEFF Model"/>
-          <element xmi:type="seff:ResourceDemandingSEFF" href="result.repository#_XYJcUMjPEeiWRYm1yDC5rQ"/>
-          <layoutConstraint xmi:type="notation:Location" xmi:id="_3pn-Aj64EeqLqsi0TrUSNg"/>
-        </children>
         <styles xmi:type="notation:SortingStyle" xmi:id="_0ieKWP-qEeiQ5r2ddfy74A"/>
         <styles xmi:type="notation:FilteringStyle" xmi:id="_0ieKWf-qEeiQ5r2ddfy74A"/>
       </children>
@@ -78,9 +73,5 @@
   <notation:Diagram xmi:id="_1opvQP-qEeiQ5r2ddfy74A" type="PCM SEFF Model" measurementUnit="Pixel">
     <styles xmi:type="notation:DiagramStyle" xmi:id="_1opvQf-qEeiQ5r2ddfy74A"/>
     <element xmi:type="seff:ResourceDemandingSEFF" href="result.repository#_1d51QMwMEeiWXYGpzxFH0A"/>
-  </notation:Diagram>
-  <notation:Diagram xmi:id="_4urhkD64EeqLqsi0TrUSNg" type="PCM SEFF Model" measurementUnit="Pixel">
-    <styles xmi:type="notation:DiagramStyle" xmi:id="_4urhkT64EeqLqsi0TrUSNg"/>
-    <element xmi:type="seff:ResourceDemandingSEFF" href="result.repository#_XYJcUMjPEeiWRYm1yDC5rQ"/>
   </notation:Diagram>
 </xmi:XMI>

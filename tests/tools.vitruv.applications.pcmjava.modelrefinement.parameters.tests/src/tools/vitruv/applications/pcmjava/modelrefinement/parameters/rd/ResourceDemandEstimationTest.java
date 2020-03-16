@@ -26,7 +26,7 @@ public class ResourceDemandEstimationTest {
         Repository pcmModel = SimpleTestData.loadPcmModel();
 
         ResourceDemandEstimationImpl rdEstimation = new ResourceDemandEstimationImpl(new LoopPredictionMock(),
-                new BranchPredictionMock());
+                new BranchPredictionMock(), false);
         rdEstimation.update(pcmModel, reader.getServiceCalls(), reader.getResourceUtilizations(),
                 reader.getResponseTimes());
 

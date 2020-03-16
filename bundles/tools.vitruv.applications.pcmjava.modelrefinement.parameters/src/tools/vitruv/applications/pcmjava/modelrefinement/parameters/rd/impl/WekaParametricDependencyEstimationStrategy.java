@@ -66,6 +66,22 @@ public class WekaParametricDependencyEstimationStrategy implements ParametricDep
         public String getResourceDemandStochasticExpression() {
             return String.valueOf(this.resourceDemand);
         }
+
+		@Override
+		public WekaDataSet<?> getDataSet() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public String getStochasticExpression() {
+			return getResourceDemandStochasticExpression();
+		}
+
+		@Override
+		public double getError() {
+			return 0;
+		}
     }
 
 }

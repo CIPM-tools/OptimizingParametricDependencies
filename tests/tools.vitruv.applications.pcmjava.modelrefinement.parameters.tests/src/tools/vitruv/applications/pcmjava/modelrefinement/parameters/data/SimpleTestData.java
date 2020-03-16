@@ -1,6 +1,7 @@
 package tools.vitruv.applications.pcmjava.modelrefinement.parameters.data;
 
 import org.palladiosimulator.pcm.repository.Repository;
+import org.palladiosimulator.pcm.resourcetype.ResourceRepository;
 
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.impl.KiekerMonitoringReader;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.util.PcmUtils;
@@ -52,4 +53,5 @@ public class SimpleTestData {
     public static Repository loadPcmModel() {
         return PcmUtils.loadModel("./test-data/simple/default.repository");
     }
+    
 }

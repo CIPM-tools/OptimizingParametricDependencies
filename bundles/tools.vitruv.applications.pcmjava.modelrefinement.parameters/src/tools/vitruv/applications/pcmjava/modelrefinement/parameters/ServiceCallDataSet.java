@@ -1,6 +1,8 @@
 package tools.vitruv.applications.pcmjava.modelrefinement.parameters;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -19,7 +21,12 @@ public interface ServiceCallDataSet {
      * @return The parameters of the service call.
      */
     ServiceParameters getParametersOfServiceCall(String serviceExecutionId);
+    
+    ServiceParameters getReturnValueOfServiceCall(final String serviceExecutionId);
+    
+    Map<String, ArrayList<ServiceCall>> getServiceIdToCall();
 
+    List<ServiceCall> getServiceCallsByOneCaller(final String serviceId, final String callerId);
     /**
      * Gets all service calls.
      *

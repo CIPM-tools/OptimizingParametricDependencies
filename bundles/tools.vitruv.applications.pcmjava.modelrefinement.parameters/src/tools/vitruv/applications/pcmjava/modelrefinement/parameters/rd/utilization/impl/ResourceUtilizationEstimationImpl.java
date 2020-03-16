@@ -229,7 +229,7 @@ public class ResourceUtilizationEstimationImpl implements ResourceUtilizationEst
                         resourceDemands);
             } else if (currentAction instanceof ExternalCallAction) {
                 currentAction = currentAction.getSuccessor_AbstractAction();
-            } else if (currentAction instanceof StopAction) {
+            } else if (currentAction instanceof StopAction || currentAction==null) {
                 return;
             } else {
                 throw new UnsupportedOperationException(

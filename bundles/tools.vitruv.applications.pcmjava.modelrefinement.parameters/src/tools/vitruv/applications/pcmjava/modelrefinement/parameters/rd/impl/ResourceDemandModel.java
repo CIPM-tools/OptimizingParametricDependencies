@@ -1,5 +1,6 @@
 package tools.vitruv.applications.pcmjava.modelrefinement.parameters.rd.impl;
 
+import tools.vitruv.applications.pcmjava.modelrefinement.parameters.ParameterModel;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.ServiceCall;
 
 /**
@@ -8,7 +9,7 @@ import tools.vitruv.applications.pcmjava.modelrefinement.parameters.ServiceCall;
  * @author JP
  *
  */
-public interface ResourceDemandModel {
+public interface ResourceDemandModel extends ParameterModel {
 
     /**
      * Predicts the resource demand in seconds for this resource demand based on a service call context.
@@ -25,4 +26,6 @@ public interface ResourceDemandModel {
      * @return The stochastic expression string.
      */
     String getResourceDemandStochasticExpression();
+    
+    double getError();
 }

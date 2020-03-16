@@ -10,7 +10,7 @@ public class B {
         this.c = c;
     }
 
-    public int methodB1(int a) {
+    public int methodB1() {
         c.whenOn(() -> {
             ThreadMonitoringController.getInstance().enterService("_T_bNAMjPEeiWRYm1yDC5rQ");
             ThreadMonitoringController.getInstance().exitService();

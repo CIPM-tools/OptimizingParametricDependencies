@@ -175,6 +175,30 @@ public class ServiceCallDataSetImpl implements ServiceCallDataSet {
         public double timeToSeconds(final long time) {
             return time * TIME_TO_SECONDS;
         }
+
+        @Override
+        public ServiceParameters getReturnValue() {
+            // TODO Auto-generated method stub
+            return null;
+        }
+    }
+
+    @Override
+    public ServiceParameters getReturnValueOfServiceCall(String serviceExecutionId) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public Map<String, ArrayList<ServiceCall>> getServiceIdToCall() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public List<ServiceCall> getServiceCallsByOneCaller(String serviceId, String callerId) {
+        // TODO Auto-generated method stub
+        return null;
     }
 
     
