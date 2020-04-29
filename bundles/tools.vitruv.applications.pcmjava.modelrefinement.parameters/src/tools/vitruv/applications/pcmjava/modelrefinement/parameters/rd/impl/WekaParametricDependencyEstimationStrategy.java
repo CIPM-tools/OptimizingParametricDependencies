@@ -8,6 +8,7 @@ import tools.vitruv.applications.pcmjava.modelrefinement.parameters.ServiceParam
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.util.WekaDataSet;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.util.WekaDataSetBuilder;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.util.WekaDataSetMode;
+import weka.core.Instances;
 
 /**
  * Implements the resource demand parametric dependency estimation by using linear regression from the weka library.
@@ -68,7 +69,7 @@ public class WekaParametricDependencyEstimationStrategy implements ParametricDep
         }
 
 		@Override
-		public WekaDataSet<?> getDataSet() {
+		public WekaDataSet<?> getWekaDataSet() {
 			// TODO Auto-generated method stub
 			return null;
 		}
@@ -81,6 +82,12 @@ public class WekaParametricDependencyEstimationStrategy implements ParametricDep
 		@Override
 		public double getError() {
 			return 0;
+		}
+
+		@Override
+		public Instances getInstancesDataSet() {
+			// TODO Auto-generated method stub
+			return null;
 		}
     }
 

@@ -22,32 +22,35 @@ import weka.filters.supervised.attribute.AttributeSelection;
  */
 public class WekaNominalArgumentModel implements ArgumentModel {
 
-	private final StochasticExpressionJ48 j48Tree;
+	private final J48 j48Tree;
 	private final WekaDataSet<?> dataset;
-	private final AttributeSelection filter;
-	private final ClassifierSubsetEval evaluator;
-	private final BestFirst search;
-	private final Instances filteredData;
 
-	public WekaNominalArgumentModel(final WekaDataSet<?> dataset) throws Exception {
+	private Instances filteredData;
+
+	private final boolean withFeatureSelection;
+
+	public WekaNominalArgumentModel(final WekaDataSet<?> dataset, boolean withFeatureSelection) throws Exception {
+		this.withFeatureSelection = withFeatureSelection;
+
 		this.dataset = dataset;
-		this.j48Tree = new StochasticExpressionJ48();
-
-		// System.out.println(this.dataset.getDataSet().toString());
-
+		this.j48Tree = new J48();
 		// feature selection
-		this.filter = new AttributeSelection();
-		this.evaluator = new ClassifierSubsetEval();
-		evaluator.setClassifier(j48Tree);
-		this.search = new BestFirst();
-		search.setDirection(new SelectedTag(2, this.search.TAGS_SELECTION));
-		filter.setEvaluator(evaluator);
-		filter.setSearch(search);
-		filter.setInputFormat(this.dataset.getDataSet());
-		filteredData = Filter.useFilter(this.dataset.getDataSet(), filter);
+		if (withFeatureSelection) {
+			AttributeSelection filter = new AttributeSelection();
+			ClassifierSubsetEval evaluator = new ClassifierSubsetEval();
+			evaluator.setClassifier(j48Tree);
+			BestFirst search = new BestFirst();
+			search.setDirection(new SelectedTag(2, BestFirst.TAGS_SELECTION));
+			filter.setEvaluator(evaluator);
+			filter.setSearch(search);
+			filter.setInputFormat(this.dataset.getDataSet());
+			filteredData = Filter.useFilter(this.dataset.getDataSet(), filter);
 
-		this.j48Tree.buildClassifier(filteredData);
-		//System.out.println(filteredData.toString());
+			this.j48Tree.buildClassifier(filteredData);
+		} else {
+			this.j48Tree.buildClassifier(this.dataset.getDataSet());
+		}
+		
 	}
 
 	/**
@@ -59,22 +62,31 @@ public class WekaNominalArgumentModel implements ArgumentModel {
 	public double getError() {
 		Evaluation evaluation = null;
 		try {
-			evaluation = new Evaluation(filteredData);
-			evaluation.evaluateModel(this.j48Tree, filteredData);
-			return Utils.round(evaluation.relativeAbsoluteError(), 3);
+			if (withFeatureSelection) {
+				evaluation = new Evaluation(filteredData);
+				evaluation.evaluateModel(this.j48Tree, filteredData);
+			} else {
+				evaluation = new Evaluation(this.dataset.getDataSet());
+				evaluation.evaluateModel(this.j48Tree, this.dataset.getDataSet());
+			}
+			return Utils.round(evaluation.rootMeanSquaredError(), 3);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return -1;
 	}
 
-	public WekaDataSet<?> getDataSet() {
-		return this.dataset;
+	public Instances getInstancesDataSet() {
+		if (withFeatureSelection) {
+			return this.filteredData;
+		} else {
+			return this.dataset.getDataSet();
+		}
 	}
 
 	@Override
 	public String getStochasticExpression() {
-		 return Utils.getStoExTree(this.j48Tree);
+		return Utils.getStoExTree(this.j48Tree);
 //		String[] attrExpr = new String[this.filteredData.numAttributes()];
 //		for (int i = 0; i < this.filteredData.numAttributes(); i++) {
 //			Attribute attr = this.filteredData.attribute(i);
@@ -82,4 +94,15 @@ public class WekaNominalArgumentModel implements ArgumentModel {
 //		}
 //		return j48Tree.getBranchStochasticExpression(0, attrExpr);
 	}
+
+	@Override
+	public WekaDataSet<?> getWekaDataSet() {
+		return this.dataset;
+	}
+
+	@Override
+	public boolean isIntegerOnly() {
+		return false;
+	}
+
 }

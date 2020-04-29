@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="ASCII"?>
+<monitorrepository:MonitorRepository xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:metricspec="http://palladiosimulator.org/MetricSpec/1.0" xmlns:monitorrepository="http://palladiosimulator.org/MonitorRepository/1.0" xmlns:pcmmeasuringpoint="http://palladiosimulator.org/PCM/MeasuringPoint/1.0" id="_KatDwIouEeqWG8RbII02Nw">
+  <monitors id="_Ka4C4IouEeqWG8RbII02Nw">
+    <measurementSpecifications id="_Ka5RAIouEeqWG8RbII02Nw">
+      <metricDescription xsi:type="metricspec:NumericalBaseMetricDescription" href="pathmap://METRIC_SPEC_MODELS/commonMetrics.metricspec#_6rYmYs7nEeOX_4BzImuHbA"/>
+      <processingType xsi:type="monitorrepository:FeedThrough" id="_KeFu8IouEeqWG8RbII02Nw"/>
+    </measurementSpecifications>
+    <measuringPoint xsi:type="pcmmeasuringpoint:ExternalCallActionMeasuringPoint" href="default.measuringpoint#//@measuringPoints.0"/>
+  </monitors>
+  <monitors id="_KeFu8YouEeqWG8RbII02Nw">
+    <measurementSpecifications id="_KeFu8oouEeqWG8RbII02Nw">
+      <metricDescription xsi:type="metricspec:NumericalBaseMetricDescription" href="pathmap://METRIC_SPEC_MODELS/commonMetrics.metricspec#_6rYmYs7nEeOX_4BzImuHbA"/>
+      <processingType xsi:type="monitorrepository:FeedThrough" id="_KeuoIIouEeqWG8RbII02Nw"/>
+    </measurementSpecifications>
+    <measuringPoint xsi:type="pcmmeasuringpoint:ExternalCallActionMeasuringPoint" href="default.measuringpoint#//@measuringPoints.1"/>
+  </monitors>
+  <monitors id="_KeuoIYouEeqWG8RbII02Nw">
+    <measurementSpecifications id="_KeuoIoouEeqWG8RbII02Nw">
+      <metricDescription xsi:type="metricspec:NumericalBaseMetricDescription" href="pathmap://METRIC_SPEC_MODELS/commonMetrics.metricspec#_6rYmYs7nEeOX_4BzImuHbA"/>
+      <processingType xsi:type="monitorrepository:FeedThrough" id="_KfdA4IouEeqWG8RbII02Nw"/>
+    </measurementSpecifications>
+    <measuringPoint xsi:type="pcmmeasuringpoint:ExternalCallActionMeasuringPoint" href="default.measuringpoint#//@measuringPoints.2"/>
+  </monitors>
+  <monitors id="_KfdA4YouEeqWG8RbII02Nw">
+    <measurementSpecifications id="_KfdA4oouEeqWG8RbII02Nw">
+      <metricDescription xsi:type="metricspec:NumericalBaseMetricDescription" href="pathmap://METRIC_SPEC_MODELS/commonMetrics.metricspec#_6rYmYs7nEeOX_4BzImuHbA"/>
+      <processingType xsi:type="monitorrepository:FeedThrough" id="_KgF6EIouEeqWG8RbII02Nw"/>
+    </measurementSpecifications>
+    <measuringPoint xsi:type="pcmmeasuringpoint:ExternalCallActionMeasuringPoint" href="default.measuringpoint#//@measuringPoints.3"/>
+  </monitors>
+  <monitors id="_KgF6EYouEeqWG8RbII02Nw">
+    <measurementSpecifications id="_KgF6EoouEeqWG8RbII02Nw">
+      <metricDescription xsi:type="metricspec:NumericalBaseMetricDescription" href="pathmap://METRIC_SPEC_MODELS/commonMetrics.metricspec#_6rYmYs7nEeOX_4BzImuHbA"/>
+      <processingType xsi:type="monitorrepository:FeedThrough" id="_KgtlIIouEeqWG8RbII02Nw"/>
+    </measurementSpecifications>
+    <measuringPoint xsi:type="pcmmeasuringpoint:ExternalCallActionMeasuringPoint" href="default.measuringpoint#//@measuringPoints.4"/>
+  </monitors>
+  <monitors id="_KgtlIYouEeqWG8RbII02Nw">
+    <measurementSpecifications id="_KgtlIoouEeqWG8RbII02Nw">
+      <metricDescription xsi:type="metricspec:NumericalBaseMetricDescription" href="pathmap://METRIC_SPEC_MODELS/commonMetrics.metricspec#_6rYmYs7nEeOX_4BzImuHbA"/>
+      <processingType xsi:type="monitorrepository:FeedThrough" id="_KhNUYIouEeqWG8RbII02Nw"/>
+    </measurementSpecifications>
+    <measuringPoint xsi:type="pcmmeasuringpoint:ExternalCallActionMeasuringPoint" href="default.measuringpoint#//@measuringPoints.5"/>
+  </monitors>
+  <monitors id="_KhPJkIouEeqWG8RbII02Nw">
+    <measurementSpecifications id="_KhPJkYouEeqWG8RbII02Nw">
+      <metricDescription xsi:type="metricspec:NumericalBaseMetricDescription" href="pathmap://METRIC_SPEC_MODELS/commonMetrics.metricspec#_6rYmYs7nEeOX_4BzImuHbA"/>
+      <processingType xsi:type="monitorrepository:FeedThrough" id="_Khvf4IouEeqWG8RbII02Nw"/>
+    </measurementSpecifications>
+    <measuringPoint xsi:type="pcmmeasuringpoint:UsageScenarioMeasuringPoint" href="default.measuringpoint#//@measuringPoints.6"/>
+  </monitors>
+</monitorrepository:MonitorRepository>

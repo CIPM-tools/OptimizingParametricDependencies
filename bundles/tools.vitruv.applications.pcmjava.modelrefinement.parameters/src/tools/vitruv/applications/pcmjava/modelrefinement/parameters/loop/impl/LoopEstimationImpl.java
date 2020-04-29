@@ -34,12 +34,14 @@ public class LoopEstimationImpl implements LoopEstimation, LoopPrediction {
 	private static final Logger LOGGER = Logger.getLogger(LoopEstimationImpl.class);
 	private final Map<String, LoopModel> modelCache;
 	private final boolean withOptimization;
+	private final OptimizationConfig config;
 
 	/**
 	 * Initializes a new instance of {@link LoopEstimationImpl}.
 	 */
-	public LoopEstimationImpl(boolean withOpt) {
+	public LoopEstimationImpl(boolean withOpt, OptimizationConfig config) {
 		this.withOptimization = withOpt;
+		this.config = config;
 		this.modelCache = new HashMap<>();
 	}
 
@@ -81,18 +83,18 @@ public class LoopEstimationImpl implements LoopEstimation, LoopPrediction {
 			return;
 		}
 		// if error >= 10% -> optimize
-		if (loopModel.getError() >= 10 && withOptimization) {
+		if (loopModel.getError() >= 0.1 && withOptimization && loopModel.getWekaDataSet().getAttributes().size() > 1) {
 			ParameterToOptimize loopToOpt = new ParameterToOptimize(loop.getId(), loopModel);
-			OptimizationConfig config = new OptimizationConfig(10000, 2, 25, OptimizationMode.Basic, 5, 0.01, true);
 			Optimization op = new Optimization(loopToOpt, config);
 			op.start();
-			stoEx = op.getOptimizedStochasticExpression();			
-			
+			stoEx = op.getOptimizedStochasticExpression();
+
 		} else {
 			stoEx = loopModel.getStochasticExpression();
-			
+
 		}
 		stoEx = Utils.replaceUnderscoreWithDot(stoEx);
+		stoEx = Utils.replaceDoubles(stoEx);
 		PCMRandomVariable randomVariable = CoreFactory.eINSTANCE.createPCMRandomVariable();
 		randomVariable.setSpecification(stoEx);
 		loop.setIterationCount_LoopAction(randomVariable);

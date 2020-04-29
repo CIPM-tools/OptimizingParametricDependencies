@@ -250,8 +250,8 @@ public class ThreadMonitoringController {
                     this.callerServiceExecutionId,
                     this.callerId,
                     this.serviceStartTime,
-                    stopTime);
-            // returnValue.toString());
+                    stopTime,
+                    returnValue.toString());
 
             RECORDS_WRITER.write(e);
         }

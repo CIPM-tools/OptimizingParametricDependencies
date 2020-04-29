@@ -13,7 +13,7 @@ public class ParameterToOptimize {
 	public ParameterToOptimize(String id, ParameterModel model) {
 		this.id = id;
 		this.model = model;
-		this.attributes = this.model.getDataSet().getAttrForValues();
+		this.attributes = this.model.getWekaDataSet().getAttrForValues();
 	}
 
 	/**

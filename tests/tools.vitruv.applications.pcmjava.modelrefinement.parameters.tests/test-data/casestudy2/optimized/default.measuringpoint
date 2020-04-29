@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ASCII"?>
+<org.palladiosimulator.edp2.models:MeasuringPointRepository xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:org.palladiosimulator.edp2.models="http://palladiosimulator.org/EDP2/MeasuringPoint/1.0" xmlns:pcmmeasuringpoint="http://palladiosimulator.org/PCM/MeasuringPoint/1.0" id="_Kau48IouEeqWG8RbII02Nw">
+  <measuringPoints xsi:type="pcmmeasuringpoint:ExternalCallActionMeasuringPoint" stringRepresentation="ExternalCall aName from A to Required_B_A->methodB1 [_XvCYUGUmEeqsxIbJMvutiA]" resourceURIRepresentation="file:/C:/Users/HP/eclipse-workspace/incremental-seff-parameter-estimation-master/tests/tools.vitruv.applications.pcmjava.modelrefinement.parameters.tests/test-data/casestudy2/optimized/result.repository#_XvCYUGUmEeqsxIbJMvutiA">
+    <externalCall href="result.repository#_XvCYUGUmEeqsxIbJMvutiA"/>
+  </measuringPoints>
+  <measuringPoints xsi:type="pcmmeasuringpoint:ExternalCallActionMeasuringPoint" stringRepresentation="ExternalCall aName from A to Required_B_A->methodB5 [_thOcYGz0Eeq3FqIU_QUKjQ]" resourceURIRepresentation="file:/C:/Users/HP/eclipse-workspace/incremental-seff-parameter-estimation-master/tests/tools.vitruv.applications.pcmjava.modelrefinement.parameters.tests/test-data/casestudy2/optimized/result.repository#_thOcYGz0Eeq3FqIU_QUKjQ">
+    <externalCall href="result.repository#_thOcYGz0Eeq3FqIU_QUKjQ"/>
+  </measuringPoints>
+  <measuringPoints xsi:type="pcmmeasuringpoint:ExternalCallActionMeasuringPoint" stringRepresentation="ExternalCall aName from A to Required_B_A->methodB2 [_sUu0EGz0Eeq3FqIU_QUKjQ]" resourceURIRepresentation="file:/C:/Users/HP/eclipse-workspace/incremental-seff-parameter-estimation-master/tests/tools.vitruv.applications.pcmjava.modelrefinement.parameters.tests/test-data/casestudy2/optimized/result.repository#_sUu0EGz0Eeq3FqIU_QUKjQ">
+    <externalCall href="result.repository#_sUu0EGz0Eeq3FqIU_QUKjQ"/>
+  </measuringPoints>
+  <measuringPoints xsi:type="pcmmeasuringpoint:ExternalCallActionMeasuringPoint" stringRepresentation="ExternalCall aName from A to Required_B_A->methodB3 [_4mPpAGz0Eeq3FqIU_QUKjQ]" resourceURIRepresentation="file:/C:/Users/HP/eclipse-workspace/incremental-seff-parameter-estimation-master/tests/tools.vitruv.applications.pcmjava.modelrefinement.parameters.tests/test-data/casestudy2/optimized/result.repository#_4mPpAGz0Eeq3FqIU_QUKjQ">
+    <externalCall href="result.repository#_4mPpAGz0Eeq3FqIU_QUKjQ"/>
+  </measuringPoints>
+  <measuringPoints xsi:type="pcmmeasuringpoint:ExternalCallActionMeasuringPoint" stringRepresentation="ExternalCall aName from A to Required_B_A->methodB6 [_69X4cGz0Eeq3FqIU_QUKjQ]" resourceURIRepresentation="file:/C:/Users/HP/eclipse-workspace/incremental-seff-parameter-estimation-master/tests/tools.vitruv.applications.pcmjava.modelrefinement.parameters.tests/test-data/casestudy2/optimized/result.repository#_69X4cGz0Eeq3FqIU_QUKjQ">
+    <externalCall href="result.repository#_69X4cGz0Eeq3FqIU_QUKjQ"/>
+  </measuringPoints>
+  <measuringPoints xsi:type="pcmmeasuringpoint:ExternalCallActionMeasuringPoint" stringRepresentation="ExternalCall aName from A to Required_B_A->methodB4 [_5-IpAGz0Eeq3FqIU_QUKjQ]" resourceURIRepresentation="file:/C:/Users/HP/eclipse-workspace/incremental-seff-parameter-estimation-master/tests/tools.vitruv.applications.pcmjava.modelrefinement.parameters.tests/test-data/casestudy2/optimized/result.repository#_5-IpAGz0Eeq3FqIU_QUKjQ">
+    <externalCall href="result.repository#_5-IpAGz0Eeq3FqIU_QUKjQ"/>
+  </measuringPoints>
+  <measuringPoints xsi:type="pcmmeasuringpoint:UsageScenarioMeasuringPoint" stringRepresentation="Usage Scenario: defaultUsageScenario" resourceURIRepresentation="file:/C:/Users/HP/eclipse-workspace/incremental-seff-parameter-estimation-master/tests/tools.vitruv.applications.pcmjava.modelrefinement.parameters.tests/test-data/casestudy2/optimized/default.usagemodel#_O-U5UG15EeqlCpezF1X6nQ">
+    <usageScenario href="default.usagemodel#_O-U5UG15EeqlCpezF1X6nQ"/>
+  </measuringPoints>
+</org.palladiosimulator.edp2.models:MeasuringPointRepository>

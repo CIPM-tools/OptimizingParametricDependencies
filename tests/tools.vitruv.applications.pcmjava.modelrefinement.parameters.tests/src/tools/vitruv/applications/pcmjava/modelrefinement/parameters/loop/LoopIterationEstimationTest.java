@@ -15,6 +15,7 @@ import tools.vitruv.applications.pcmjava.modelrefinement.parameters.MonitoringDa
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.ServiceParametersUtil;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.data.SimpleTestData;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.loop.impl.LoopEstimationImpl;
+import tools.vitruv.applications.pcmjava.modelrefinement.parameters.optimization.genetic.OptimizationConfig;
 
 public class LoopIterationEstimationTest {
 
@@ -37,7 +38,7 @@ public class LoopIterationEstimationTest {
 
     @Before
     public void setUpTest() {
-        this.loopEstimation = new LoopEstimationImpl(false);
+        this.loopEstimation = new LoopEstimationImpl(false, OptimizationConfig.EMPTY);
         this.loopAction = this.createLoopAction();
         this.repository = RepositoryFactory.eINSTANCE.createRepository();
     }

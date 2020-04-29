@@ -20,12 +20,16 @@ public class WekaArgumentsModelEstimation {
 	private final ServiceCallDataSet externalCallRecords;
 	private final Repository pcm;
 	private final List<ExternalCallAction> externalCallActions;
+	private final boolean withFeatureSelection;
+	private final boolean withReturnValue;
 
 	public WekaArgumentsModelEstimation(final ServiceCallDataSet externalCallRecords, final Repository pcm,
-			final List<ExternalCallAction> externalCallActions) {
+			final List<ExternalCallAction> externalCallActions, boolean withFeatureSelection, boolean withReturnValue) {
 		this.externalCallRecords = externalCallRecords;
 		this.pcm = pcm;
 		this.externalCallActions = externalCallActions;
+		this.withFeatureSelection = withFeatureSelection;
+		this.withReturnValue = withReturnValue;
 	}
 
 	/**
@@ -71,6 +75,7 @@ public class WekaArgumentsModelEstimation {
 			for (Entry<String, Object> calleeParameter : record.getParameters().getParameters().entrySet()) {
 
 				WekaDataSetBuilder<Object> builder = null;
+
 				if (!parameterNameToDataSetBuilder.containsKey(calleeParameter.getKey())) {
 					builder = (WekaDataSetBuilder<Object>) whichBuilder(calleeParameter.getValue(),
 							this.externalCallRecords);
@@ -78,23 +83,23 @@ public class WekaArgumentsModelEstimation {
 				} else {
 					builder = parameterNameToDataSetBuilder.get(calleeParameter.getKey());
 				}
-				ServiceParameters returnValues = getReturnValues(action, record.getCallerServiceExecutionId());
-				if (returnValues.getParameters().isEmpty()) {
-					builder.addInstance(record.getCallerServiceExecutionId(), calleeParameter.getValue());
-				} else {
-					builder.addInstanceWithReturnValues(record.getCallerServiceExecutionId(), returnValues,
-							calleeParameter.getValue());
-				}
+					ServiceParameters returnValues = getReturnValues(action, record.getCallerServiceExecutionId());
+					if ((returnValues.getParameters().isEmpty() && withReturnValue) || !withReturnValue) {
+						builder.addInstance(record.getCallerServiceExecutionId(), calleeParameter.getValue());
+					} else {
+						builder.addInstanceWithReturnValues(record.getCallerServiceExecutionId(), returnValues,
+								calleeParameter.getValue());
+					}				
 			}
 		}
 		parameterNameToDataSetBuilder.forEach((k, v) -> {
-			
+
 			try {
-				boolean intOnly = v.getMode()==WekaDataSetMode.IntegerOnly;
+				boolean intOnly = v.getMode() == WekaDataSetMode.IntegerOnly;
 				if (v.getMode() == WekaDataSetMode.NumericOnly || v.getMode() == WekaDataSetMode.IntegerOnly) {
-					models.put(k, new WekaNumericArgumentModel(v.build(),intOnly));
+					models.put(k, new WekaNumericArgumentModel(v.build(), intOnly, withFeatureSelection));
 				} else {
-					models.put(k, new WekaNominalArgumentModel(v.build()));
+					models.put(k, new WekaNominalArgumentModel(v.build(), withFeatureSelection));
 				}
 			} catch (Exception e) {
 				throw new RuntimeException(e);
@@ -104,12 +109,11 @@ public class WekaArgumentsModelEstimation {
 	}
 
 	private WekaDataSetBuilder<?> whichBuilder(Object parameter, ServiceCallDataSet serviceCalls) {
-		if (parameter instanceof Double || parameter instanceof Long
-				|| parameter instanceof Float) {
+		if (parameter instanceof Double || parameter instanceof Long || parameter instanceof Float) {
 			return new WekaDataSetBuilder<Long>(serviceCalls, WekaDataSetMode.NumericOnly);
 		} else if (parameter instanceof String || parameter instanceof Boolean || parameter instanceof Character) {
 			return new WekaDataSetBuilder<String>(serviceCalls, WekaDataSetMode.NoTransformations);
-		} else if (parameter instanceof Iterable || parameter instanceof Integer) { 
+		} else if (parameter instanceof Iterable || parameter instanceof Integer) {
 			return new WekaDataSetBuilder<Integer>(serviceCalls, WekaDataSetMode.IntegerOnly);
 		} else {
 			throw new RuntimeException(

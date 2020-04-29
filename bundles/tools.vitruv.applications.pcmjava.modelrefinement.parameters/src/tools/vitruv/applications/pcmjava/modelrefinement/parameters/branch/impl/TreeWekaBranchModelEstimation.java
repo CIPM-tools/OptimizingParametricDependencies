@@ -17,6 +17,7 @@ import tools.vitruv.applications.pcmjava.modelrefinement.parameters.monitoring.r
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.util.WekaDataSet;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.util.WekaDataSetBuilder;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.util.WekaDataSetMode;
+import weka.core.Instances;
 
 /**
  * Implements the branch model estimation by using a J48 tree from the weka library. The tree can then be transformed
@@ -162,13 +163,19 @@ public class TreeWekaBranchModelEstimation {
         }
 
 		@Override
-		public WekaDataSet<String> getDataSet() {
+		public WekaDataSet<String> getWekaDataSet() {
 			// TODO Auto-generated method stub
 			return null;
 		}
 
 		@Override
 		public String getStochasticExpression() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public Instances getInstancesDataSet() {
 			// TODO Auto-generated method stub
 			return null;
 		}

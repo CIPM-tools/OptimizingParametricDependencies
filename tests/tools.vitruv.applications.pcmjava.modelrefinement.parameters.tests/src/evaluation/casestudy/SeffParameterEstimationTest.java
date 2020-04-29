@@ -15,6 +15,7 @@ import tools.vitruv.applications.pcmjava.modelrefinement.parameters.MonitoringDa
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.SeffParameterEstimation;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.data.SimpleTestData;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.impl.KiekerMonitoringReader;
+import tools.vitruv.applications.pcmjava.modelrefinement.parameters.optimization.genetic.OptimizationConfig;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.util.ExportUtils;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.util.PcmUtils;
 
@@ -35,22 +36,23 @@ public class SeffParameterEstimationTest {
     @BeforeClass
     public static void setUp() {
         LoggingUtil.InitConsoleLogger();
-    }    
-    
+    }
+
     @Test
     public void evaluation() throws Exception {
         evaluationStep(Common.EvaluationData.Threaded2);
-        //evaluationStep(Common.EvaluationData.Default);
-        //evaluationStep(Common.EvaluationData.Threaded);
-        //evaluationStep(Common.EvaluationData.Threaded2);
+        // evaluationStep(Common.EvaluationData.Default);
+        // evaluationStep(Common.EvaluationData.Threaded);
+        // evaluationStep(Common.EvaluationData.Threaded2);
     }
 
     public static void evaluationStep(String name) throws Exception {
         Common c;
-        
+
         // iteration 0
         c = new Common(Mode.Iteration0, Mode.Iteration0, name);
-        SeffParameterEstimation estimation = new SeffParameterEstimation(false);
+        SeffParameterEstimation estimation = new SeffParameterEstimation(false, true, false, false,
+                OptimizationConfig.EMPTY);
 
         MonitoringDataSet readerIteration0 = getReader(c);
         Repository pcmModelIteration0 = loadPcmModel(c);
@@ -59,7 +61,7 @@ public class SeffParameterEstimationTest {
 
         savePcmModel(c, pcmModelIteration0);
         storeUtilization(c, readerIteration0);
-        
+
         // iteration 1
         c = new Common(Mode.Iteration1, Mode.Iteration1, name);
         MonitoringDataSet readerIteration1 = getReader(c);
@@ -69,11 +71,11 @@ public class SeffParameterEstimationTest {
 
         savePcmModel(c, pcmModelIteration1);
         storeUtilization(c, readerIteration1);
-        
+
         // complete
         c = new Common(Mode.Complete, Mode.Iteration1, name);
-        SeffParameterEstimation estimationComplete = new SeffParameterEstimation(true
-                );
+        SeffParameterEstimation estimationComplete = new SeffParameterEstimation(false, true, false, false,
+                OptimizationConfig.EMPTY);
 
         MonitoringDataSet readerComplete = getReader(c);
         Repository pcmModelComplete = loadPcmModel(c);
@@ -86,7 +88,7 @@ public class SeffParameterEstimationTest {
 
     public void compareMonitoringRecordsCount(String name) throws Exception {
         Common d;
-        
+
         d = new Common(Mode.Iteration0, Mode.Iteration0, name);
         int a = getMonitoringRecordsCount(getReader(d));
 
@@ -99,7 +101,7 @@ public class SeffParameterEstimationTest {
         System.out.println("a " + String.valueOf(a) + " b " + String.valueOf(b) + " c " + String.valueOf(c));
 
     }
-    
+
     private static void storeUtilization(Common c, MonitoringDataSet monitoringData)
             throws IOException {
         Long earliest = monitoringData.getResponseTimes().getEarliestEntry();

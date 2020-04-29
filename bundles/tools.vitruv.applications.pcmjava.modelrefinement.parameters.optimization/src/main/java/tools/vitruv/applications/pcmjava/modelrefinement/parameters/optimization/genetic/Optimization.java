@@ -52,8 +52,7 @@ public class Optimization {
 	 * Constructor for the optimization class
 	 * 
 	 * @param param       subject of the optimization
-	 * @param mode        optimization mode
-	 * @param generations number of evolutions/generations
+	 * @param config	  configuration details of the optimization
 	 */
 	public Optimization(ParameterToOptimize param, OptimizationConfig config) {
 		this.parameter = param;
@@ -88,7 +87,7 @@ public class Optimization {
 		List<Op<Double>> variables = new ArrayList<Op<Double>>();
 		
 		// add the names of all numeric variables	
-		Map<String, Integer> attributes = parameter.getModel().getDataSet().getAttributesWithIndex();
+		Map<String, Integer> attributes = parameter.getModel().getWekaDataSet().getAttributesWithIndex();
 		for(Entry<String, Integer> attr : attributes.entrySet()) {
 			if(!attr.getKey().equals("class")) {
 				variables.add(Var.of(attr.getKey(), attr.getValue()));
@@ -106,7 +105,7 @@ public class Optimization {
 	 */
 	private Iterable<Sample<Double>> getSample() {
 		List<Sample<Double>> samples = new ArrayList<Sample<Double>>();
-		List<String> instances = this.parameter.getModel().getDataSet().getInstances();
+		List<String> instances = this.parameter.getModel().getWekaDataSet().getInstances();
 		Iterator<String> instancesIterator = instances.iterator();
 		
 		while (instancesIterator.hasNext()) {
@@ -147,13 +146,20 @@ public class Optimization {
 				.minimizing()
 				.alterers(new SingleNodeCrossover<>(0.15), new Mutator<>(0.15))
 				.build();
-		
+		if(config.withInitialIndividual) {
 		result = engine.stream(getInitialIndividual(this.parameter.getModel().getStochasticExpression()))
 				.limit(Limits.byFitnessThreshold(config.fitnessThreshold))
 				.limit(Limits.byExecutionTime(Duration.ofMinutes(config.timeLimit)))
 				.limit(config.generations)
 				.collect(EvolutionResult.toBestEvolutionResult());
-
+		}
+		else {
+			result = engine.stream()
+					.limit(Limits.byFitnessThreshold(config.fitnessThreshold))
+					.limit(Limits.byExecutionTime(Duration.ofMinutes(config.timeLimit)))
+					.limit(config.generations)
+					.collect(EvolutionResult.toBestEvolutionResult());
+		}
 		expression = result.getBestPhenotype().getGenotype().getGene();
 
 		// Simplify result program
@@ -174,8 +180,10 @@ public class Optimization {
 	 * Print statistics for the optimization
 	 */
 	public void printStats() {
-		System.out.println("Generations: " + result.getTotalGenerations());
+		//System.out.println("Generations: " + result.getTotalGenerations());
 		System.out.println("Error:       " + regression.error(this.tree));
+		System.out.println("COMPL:       " + this.tree.depth());
+		System.out.println("StoEx:       " + getOptimizedStochasticExpression());
 	}
 
 	/**
@@ -201,8 +209,4 @@ public class Optimization {
 		return new MathExpr(this.tree).toString();
 	}
 	
-//	private void test() {
-//	MathExpr e = MathExpr.parse("0.333 * s_BYTESIZE + (0.167 * x_VALUE + (0.333 * y_VALUE + (6.333)))");
-//	System.out.println(e.eval(11,6,3));
-//}
 }

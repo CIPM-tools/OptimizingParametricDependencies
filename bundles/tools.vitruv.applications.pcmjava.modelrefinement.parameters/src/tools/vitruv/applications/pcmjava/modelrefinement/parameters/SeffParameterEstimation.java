@@ -5,6 +5,7 @@ import org.palladiosimulator.pcm.repository.Repository;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.arguments.impl.ArgumentEstimationImpl;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.branch.impl.BranchEstimationImpl;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.loop.impl.LoopEstimationImpl;
+import tools.vitruv.applications.pcmjava.modelrefinement.parameters.optimization.genetic.OptimizationConfig;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.rd.impl.ResourceDemandEstimationImpl;
 
 /**
@@ -23,16 +24,24 @@ public class SeffParameterEstimation {
     private final ResourceDemandEstimationImpl resourceDemandEstimation;
     
     private final ArgumentEstimationImpl argumentEstimation;    
+    
+    //needed for the evaluation; can be removed later on
+    private boolean withExtCalls;
+    private boolean withFeatureSelection;
+    private boolean withReturnValue;
 
     /**
      * Initializes a new instance of {@link SeffParameterEstimation}.
      */
-    public SeffParameterEstimation(boolean withOpt) {
+    public SeffParameterEstimation(boolean withOpt, boolean withExtCalls, boolean withFeatureSelection, boolean withReturnValue, OptimizationConfig config) {
+    	this.withExtCalls = withExtCalls;
+    	this.withFeatureSelection = withFeatureSelection;
+    	this.withReturnValue = withReturnValue;
     	
-        this.loopEstimation = new LoopEstimationImpl(withOpt);
+        this.loopEstimation = new LoopEstimationImpl(false, config);
         this.branchEstimation = new BranchEstimationImpl();
-        this.resourceDemandEstimation = new ResourceDemandEstimationImpl(this.loopEstimation, this.branchEstimation, withOpt);
-        this.argumentEstimation = new ArgumentEstimationImpl(withOpt);
+        this.resourceDemandEstimation = new ResourceDemandEstimationImpl(this.loopEstimation, this.branchEstimation, withOpt, config);
+        this.argumentEstimation = new ArgumentEstimationImpl(withOpt, withFeatureSelection, withReturnValue, config);
     }
 
     /**
@@ -48,7 +57,9 @@ public class SeffParameterEstimation {
         this.loopEstimation.update(pcm, monitoringDataSet.getServiceCalls(), monitoringDataSet.getLoops());
         this.branchEstimation.update(pcm, monitoringDataSet.getServiceCalls(), monitoringDataSet.getBranches());
         this.resourceDemandEstimation.update(pcm, monitoringDataSet.getServiceCalls(),
-                monitoringDataSet.getResourceUtilizations(), monitoringDataSet.getResponseTimes());
-        this.argumentEstimation.update(pcm, monitoringDataSet.getExternalServiceCalls());
+        	monitoringDataSet.getResourceUtilizations(), monitoringDataSet.getResponseTimes());
+        if(this.withExtCalls) {
+        	this.argumentEstimation.update(pcm, monitoringDataSet.getExternalServiceCalls());
+        }
     }
 }

@@ -2,7 +2,7 @@ package tools.vitruv.applications.pcmjava.modelrefinement.parameters.util;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.security.SecureRandom;
+import java.text.DecimalFormat;
 import java.util.StringJoiner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -12,13 +12,7 @@ import weka.classifiers.trees.J48;
 import weka.core.Instances;
 
 public class Utils {
-	private static final String CHAR_LOWER = "abcdefghijklmnopqrstuvwxyz";
-    private static final String CHAR_UPPER = CHAR_LOWER.toUpperCase();
-    private static final String NUMBER = "0123456789";
 
-    private static final String DATA_FOR_RANDOM_STRING = CHAR_LOWER + CHAR_UPPER + NUMBER;
-    private static SecureRandom random = new SecureRandom();
-	
 	private static final String PLUS_PARENTHESIS = " + (";
 	private static final String MULTIPLICATION = " * ";
 	private static final String OPENING_PARENTHESIS = "(";
@@ -27,7 +21,6 @@ public class Utils {
 	private static final String SPACES = "\\s+";
 	private static final char PIPE = '|';
 	private static final String COLON = ":";
-	private static final String IF = "IF";
 	private static final String QUESTION = "?";
 
 	public static double round(double value, int places) {
@@ -40,9 +33,16 @@ public class Utils {
 	}
 
 	public static String replaceUnderscoreWithDot(String stoEx) {
-		return stoEx.replaceAll("_VALUE", ".VALUE").replaceAll("_BYTESIZE", ".BYTESIZE");
+		return stoEx.replaceAll("_VALUE", ".VALUE").replaceAll("_BYTESIZE", ".BYTESIZE")
+				.replaceAll("_NUMBER_OF_ELEMENTS", ".NUMBER_OF_ELEMENTS");
 	}
 
+	/**
+	 * Parses the coefficients of a classifier to generate a stoex
+	 * @param classifier 
+	 * @param filteredData dataset
+	 * @return
+	 */
 	public static String getStoExLinReg(LinearRegression classifier, Instances filteredData) {
 		StringJoiner result = new StringJoiner(PLUS_PARENTHESIS);
 		double[] coefficients = classifier.coefficients();
@@ -66,6 +66,11 @@ public class Utils {
 		return strBuilder.toString();
 	}
 
+	/** 
+	 * Parses the coefficients of the tree to generate a stoex
+	 * @param j48Tree decision tree
+	 * @return
+	 */
 	public static String getStoExTree(J48 j48Tree) {
 		String[] lines = j48Tree.toString().split(NEW_LINE);
 		if (lines.length == 6) { // constant value (6 is the min size ot the tree)
@@ -102,8 +107,7 @@ public class Utils {
 //		for (int i = 0; i < numPipes-1; i++) {
 //		builder.append(")");
 //	}
-		return cleanStoEx(builder.toString().substring(1, builder.toString().length() - 1)); // remove the most outter
-																								// parenthesis
+		return cleanStoEx(builder.toString()); 
 	}
 
 	private static String cleanStoEx(String stoEx) {
@@ -120,40 +124,34 @@ public class Utils {
 		return (int) str.chars().filter(ch -> ch == PIPE).count();
 	}
 
+	/**
+	 * Replaces all doubles by distribution functions with integers
+	 * @param stoEx input stoex
+	 * @return
+	 */
 	public static String replaceDoubles(String stoEx) {
-		Pattern p = Pattern.compile("(\\d+(?:\\.[1-9]\\d*))");
-		Matcher m = p.matcher(stoEx);
-		while (m.find()) {
-			double d = Double.parseDouble(m.group(1));
-			String dStr = String.valueOf(d);
-			String[] parts = dStr.split("\\.");
-			int lower = Integer.valueOf(parts[0]);
-			int upper = lower+1;
-			double decimalPart = d - lower;
-			decimalPart = round(decimalPart, 2);
-			double rest = round(1-decimalPart,2);
-			String replacement = "DoublePMF[(" + lower + ";" + rest + ")(" + upper + ";" + decimalPart + ")]";
-			stoEx = stoEx.replaceAll(m.group(1), replacement);			
-		}
-		return stoEx;
+		DecimalFormat df = new DecimalFormat( "0.00" );
+
+	    Pattern p = Pattern.compile( "(\\d+\\.\\d+)" );
+	    Matcher m = p.matcher( stoEx );
+	    String result = "";
+	    StringJoiner stringJoiner = new StringJoiner( "+" );
+	    String[] splitString = stoEx.split( "\\+" );
+	    for( String subString: splitString )
+	    {
+	        if( m.find() )
+	        {
+	            String fracPart = m.group( 1 ).split( "\\." )[1];
+	            int lowerInt = Integer.valueOf(m.group( 1 ).split( "\\." )[0]);
+	            int upperInt = lowerInt + 1;
+	            String fracOne = df.format( 1 - ( Integer.parseInt( fracPart ) / Math.pow( 10.0, fracPart.length() ) ) );
+	            String fracTwo = df.format( ( Integer.parseInt( fracPart ) / Math.pow( 10.0, fracPart.length() ) ) );
+	            String resultEx = "IntPMF[(" + lowerInt + ";" + fracOne + ")(" + upperInt + ";" + fracTwo + ")]";
+	            result = subString.replaceFirst( m.group( 1 ), resultEx );
+	            stringJoiner.add( result );
+	        }
+	    }
+	    return stringJoiner.toString();
 	}
-	
-	public static String generateRandomString(int length) {
-        if (length < 1) throw new IllegalArgumentException();
 
-        StringBuilder sb = new StringBuilder(length);
-        for (int i = 0; i < length; i++) {
-
-			// 0-62 (exclusive), random returns 0-61
-            int rndCharAt = random.nextInt(DATA_FOR_RANDOM_STRING.length());
-            char rndChar = DATA_FOR_RANDOM_STRING.charAt(rndCharAt);
-
-            sb.append(rndChar);
-
-        }
-
-        return sb.toString();
-
-    }
-    
 }

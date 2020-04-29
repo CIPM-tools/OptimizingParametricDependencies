@@ -25,6 +25,7 @@ public class WekaLoopModel implements LoopModel {
 	public WekaLoopModel(final WekaDataSet<Long> dataset) throws Exception {
 		this.dataset = dataset;
 		this.classifier = new LinearRegression();
+//Feature selection doesn't work very well here		
 
 //		this.filter = new AttributeSelection();
 //		this.evaluator = new ClassifierSubsetEval();
@@ -53,7 +54,7 @@ public class WekaLoopModel implements LoopModel {
 	}
 
 	@Override
-	public WekaDataSet<Long> getDataSet() {
+	public WekaDataSet<Long> getWekaDataSet() {
 		return this.dataset;
 	}
 
@@ -72,9 +73,11 @@ public class WekaLoopModel implements LoopModel {
 
 	@Override
 	public String getStochasticExpression() {
-		String stoEx = Utils.getStoExLinReg(this.classifier, this.dataset.getDataSet());
-		//replace double values with distribution functions
-		return Utils.replaceDoubles(stoEx);
-		//return Utils.getStoExLinReg(classifier, this.dataset.getDataSet());
+		return Utils.getStoExLinReg(classifier, this.dataset.getDataSet());
+	}
+
+	@Override
+	public Instances getInstancesDataSet() {
+		return this.dataset.getDataSet();
 	}
 }

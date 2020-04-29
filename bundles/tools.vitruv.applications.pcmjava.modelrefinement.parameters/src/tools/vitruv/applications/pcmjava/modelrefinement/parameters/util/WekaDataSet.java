@@ -246,7 +246,6 @@ public class WekaDataSet<T> {
 
 	private void addParameter(final String name, final List<ParametersWithClass<T>> values) {
 		Object value = values.get(0).getParameters().getParameters().get(name);
-		//System.out.println(value.getClass().getSimpleName() + ":" + value.toString() + "->" + this.mode);
 		if (value instanceof Integer || value instanceof Double || value instanceof Float || value instanceof Long) {
 			this.addNumericParameter(name, values);
 		} else if (value instanceof Boolean && this.mode != WekaDataSetMode.IntegerOnly

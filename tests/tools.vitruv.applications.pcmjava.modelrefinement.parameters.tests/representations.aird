@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:diagram="http://www.eclipse.org/sirius/diagram/1.1.0" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:resourceenvironment="http://palladiosimulator.org/PalladioComponentModel/ResourceEnvironment/5.2" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" xmlns:usagemodel="http://palladiosimulator.org/PalladioComponentModel/UsageModel/5.2" xmlns:viewpoint="http://www.eclipse.org/sirius/1.1.0" xsi:schemaLocation="http://www.eclipse.org/sirius/description/1.1.0 http://www.eclipse.org/sirius/1.1.0#//description http://www.eclipse.org/sirius/diagram/description/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description http://palladiosimulator.org/PalladioComponentModel/ResourceEnvironment/5.2 http://palladiosimulator.org/PalladioComponentModel/5.2#//resourceenvironment http://www.eclipse.org/sirius/diagram/description/style/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description/style http://palladiosimulator.org/PalladioComponentModel/UsageModel/5.2 http://palladiosimulator.org/PalladioComponentModel/5.2#//usagemodel">
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:diagram="http://www.eclipse.org/sirius/diagram/1.1.0" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:resourceenvironment="http://palladiosimulator.org/PalladioComponentModel/ResourceEnvironment/5.2" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" xmlns:system="http://palladiosimulator.org/PalladioComponentModel/System/5.2" xmlns:usagemodel="http://palladiosimulator.org/PalladioComponentModel/UsageModel/5.2" xmlns:viewpoint="http://www.eclipse.org/sirius/1.1.0" xsi:schemaLocation="http://www.eclipse.org/sirius/description/1.1.0 http://www.eclipse.org/sirius/1.1.0#//description http://www.eclipse.org/sirius/diagram/description/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description http://palladiosimulator.org/PalladioComponentModel/ResourceEnvironment/5.2 http://palladiosimulator.org/PalladioComponentModel/5.2#//resourceenvironment http://www.eclipse.org/sirius/diagram/description/style/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description/style http://palladiosimulator.org/PalladioComponentModel/System/5.2 http://palladiosimulator.org/PalladioComponentModel/5.2#//system http://palladiosimulator.org/PalladioComponentModel/UsageModel/5.2 http://palladiosimulator.org/PalladioComponentModel/5.2#//usagemodel">
   <viewpoint:DAnalysis uid="_ZX1VcGRSEeqNyN9mmPHNWw" selectedViews="_SVDu4GRVEeq7fJUFjhGvew _82llsGRVEeq7fJUFjhGvew _LOv34GRzEeq7fJUFjhGvew" version="14.1.0.201810161215">
     <semanticResources>pathmap://PCM_MODELS/Palladio.resourcetype</semanticResources>
     <semanticResources>pathmap://PCM_MODELS/PrimitiveTypes.repository</semanticResources>
     <semanticResources>pathmap://PCM_MODELS/FailureTypes.repository</semanticResources>
     <semanticResources>test-data/casestudy/Iteration1-model/default.repository</semanticResources>
     <semanticResources>test-data/casestudy/Iteration1-model/newUsageModel.usagemodel</semanticResources>
-    <semanticResources>test-data/casestudy/results/Complete/default.system</semanticResources>
     <semanticResources>test-data/casestudy/results/Complete/default.system_diagram</semanticResources>
     <semanticResources>file:/C:/Users/HP/eclipse-workspace/incremental-seff-parameter-estimation-master/tests/tools.vitruv.applications.pcmjava.modelrefinement.parameters.tests/test-data/casestudy/Iteration1-model/default.repository</semanticResources>
     <semanticResources>test-data/casestudy/results/Complete/result.repository</semanticResources>
@@ -1016,6 +1015,48 @@
     <semanticResources>pathmap:/javaclass/org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy.java</semanticResources>
     <semanticResources>pathmap:/javaclass/org.eclipse.emf.cdo.common.CDOCommonView$Options.java</semanticResources>
     <semanticResources>pathmap:/javaclass/org.eclipse.emf.cdo.common.commit.CDOCommitHistory.java</semanticResources>
+    <semanticResources>pathmap:/javaclass/org.cache2k.CacheEntry.java</semanticResources>
+    <semanticResources>pathmap:/javaclass/org.cache2k.CacheOperationCompletionListener.java</semanticResources>
+    <semanticResources>pathmap:/javaclass/org.cache2k.processor.EntryProcessor.java</semanticResources>
+    <semanticResources>pathmap:/javaclass/org.cache2k.processor.MutableCacheEntry.java</semanticResources>
+    <semanticResources>pathmap:/javaclass/org.cache2k.CacheManager.java</semanticResources>
+    <semanticResources>pathmap:/javaclass/org.cache2k.spi.Cache2kCoreProvider.java</semanticResources>
+    <semanticResources>pathmap:/javaclass/org.cache2k.Cache.java</semanticResources>
+    <semanticResources>pathmap:/javaclass/org.cache2k.configuration.Cache2kConfiguration.java</semanticResources>
+    <semanticResources>pathmap:/javaclass/org.cache2k.KeyValueStore.java</semanticResources>
+    <semanticResources>pathmap:/javaclass/org.cache2k.AdvancedKeyValueSource.java</semanticResources>
+    <semanticResources>pathmap:/javaclass/org.cache2k.KeyValueSource.java</semanticResources>
+    <semanticResources>pathmap:/javaclass/org.cache2k.configuration.CacheType.java</semanticResources>
+    <semanticResources>pathmap:/javaclass/org.cache2k.configuration.CustomizationSupplier.java</semanticResources>
+    <semanticResources>pathmap:/javaclass/org.cache2k.configuration.CustomizationCollection.java</semanticResources>
+    <semanticResources>pathmap:/javaclass/org.cache2k.configuration.ConfigurationSectionContainer.java</semanticResources>
+    <semanticResources>pathmap:/javaclass/org.cache2k.configuration.ConfigurationSection.java</semanticResources>
+    <semanticResources>pathmap:/javaclass/org.cache2k.integration.FunctionalCacheLoader.java</semanticResources>
+    <semanticResources>pathmap:/javaclass/org.cache2k.integration.AdvancedCacheLoader.java</semanticResources>
+    <semanticResources>pathmap:/javaclass/org.cache2k.expiry.ExpiryPolicy.java</semanticResources>
+    <semanticResources>pathmap:/javaclass/org.cache2k.integration.CacheWriter.java</semanticResources>
+    <semanticResources>pathmap:/javaclass/org.cache2k.integration.ExceptionPropagator.java</semanticResources>
+    <semanticResources>pathmap:/javaclass/org.cache2k.event.CacheEntryOperationListener.java</semanticResources>
+    <semanticResources>pathmap:/javaclass/org.cache2k.event.CacheClosedListener.java</semanticResources>
+    <semanticResources>pathmap:/javaclass/org.cache2k.integration.ResiliencePolicy.java</semanticResources>
+    <semanticResources>pathmap:/javaclass/org.cache2k.TimeReference.java</semanticResources>
+    <semanticResources>pathmap:/javaclass/org.cache2k.configuration.ConfigurationBean.java</semanticResources>
+    <semanticResources>pathmap:/javaclass/org.cache2k.configuration.ConfigurationWithSections.java</semanticResources>
+    <semanticResources>pathmap:/javaclass/org.cache2k.expiry.ExpiryTimeValues.java</semanticResources>
+    <semanticResources>pathmap:/javaclass/org.cache2k.integration.ExceptionInformation.java</semanticResources>
+    <semanticResources>pathmap:/javaclass/org.cache2k.integration.ResiliencePolicy$Context.java</semanticResources>
+    <semanticResources>pathmap:/javaclass/org.cache2k.configuration.CustomizationReferenceSupplier.java</semanticResources>
+    <semanticResources>pathmap:/javaclass/org.cache2k.integration.CacheLoader.java</semanticResources>
+    <semanticResources>pathmap:/javaclass/org.cache2k.integration.LoadDetail.java</semanticResources>
+    <semanticResources>pathmap:/javaclass/org.cache2k.configuration.ConfigurationSectionBuilder.java</semanticResources>
+    <semanticResources>pathmap:/javaclass/org.cache2k.IntCache.java</semanticResources>
+    <semanticResources>pathmap:/javaclass/org.cache2k.IntKeyValueStore.java</semanticResources>
+    <semanticResources>pathmap:/javaclass/org.cache2k.IntKeyValueSource.java</semanticResources>
+    <semanticResources>pathmap:/javaclass/org.cache2k.LongCache.java</semanticResources>
+    <semanticResources>pathmap:/javaclass/org.cache2k.LongKeyValueStore.java</semanticResources>
+    <semanticResources>pathmap:/javaclass/org.cache2k.LongKeyValueSource.java</semanticResources>
+    <semanticResources>test-data/casestudy2/non-optimized/default.resourceenvironment</semanticResources>
+    <semanticResources>test-data/casestudy2/non-optimized/default.resourceenvironment_diagram</semanticResources>
     <ownedViews xmi:type="viewpoint:DView" uid="_SVDu4GRVEeq7fJUFjhGvew">
       <viewpoint xmi:type="description:Viewpoint" href="platform:/plugin/org.palladiosimulator.editors.sirius.resourceenvironment/description/resourceenvironment.odesign#//@ownedViewpoints[name='ResourceEnvironment']"/>
       <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_Sngw0GRVEeq7fJUFjhGvew" name="new ResourceEnvironment Diagram" repPath="#_SX8DwGRVEeq7fJUFjhGvew">
@@ -1027,6 +1068,10 @@
       <viewpoint xmi:type="description:Viewpoint" href="platform:/plugin/org.palladiosimulator.editors.sirius.assembly/description/assembly.odesign#//@ownedViewpoints[name='Assembly']"/>
       <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_9WmigGRVEeq7fJUFjhGvew" name="new Assembly Diagram">
         <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/org.palladiosimulator.editors.sirius.assembly/description/assembly.odesign#//@ownedViewpoints[name='Assembly']/@ownedRepresentations[name='Assembly%20Diagram']"/>
+      </ownedRepresentationDescriptors>
+      <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_ieaiYGnXEeqjJrhLlsOzgw" name="casestudy2" repPath="#_hzO3YGnXEeqjJrhLlsOzgw">
+        <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/org.palladiosimulator.editors.sirius.assembly/description/assembly.odesign#//@ownedViewpoints[name='Assembly']/@ownedRepresentations[name='Assembly%20Diagram']"/>
+        <target xmi:type="system:System" href="test-data/casestudy2/non-optimized/casestudy2.system#_eAp9oGnXEeqjJrhLlsOzgw"/>
       </ownedRepresentationDescriptors>
     </ownedViews>
     <ownedViews xmi:type="viewpoint:DView" uid="_LOv34GRzEeq7fJUFjhGvew">
@@ -1161,5 +1206,37 @@
     <filterVariableHistory xmi:type="diagram:FilterVariableHistory" uid="_LQyfQGRzEeq7fJUFjhGvew"/>
     <activatedLayers xmi:type="description_1:Layer" href="platform:/plugin/org.palladiosimulator.editors.sirius.usage/description/usage.odesign#//@ownedViewpoints[name='UsageModel']/@ownedRepresentations[name='UsageModel%20Diagram']/@defaultLayer"/>
     <target xmi:type="usagemodel:UsageModel" href="test-data/casestudy/Iteration1-model/newUsageModel.usagemodel#/"/>
+  </diagram:DSemanticDiagram>
+  <diagram:DSemanticDiagram uid="_hzO3YGnXEeqjJrhLlsOzgw" name="casestudy2">
+    <ownedAnnotationEntries xmi:type="description:AnnotationEntry" uid="_ieR_gGnXEeqjJrhLlsOzgw" source="DANNOTATION_CUSTOMIZATION_KEY">
+      <data xmi:type="diagram:ComputedStyleDescriptionRegistry" uid="_ieR_gWnXEeqjJrhLlsOzgw"/>
+    </ownedAnnotationEntries>
+    <ownedAnnotationEntries xmi:type="description:AnnotationEntry" uid="_iflnEGnXEeqjJrhLlsOzgw" source="GMF_DIAGRAMS">
+      <data xmi:type="notation:Diagram" xmi:id="_iflnEWnXEeqjJrhLlsOzgw" type="Sirius" element="_hzO3YGnXEeqjJrhLlsOzgw" measurementUnit="Pixel">
+        <children xmi:type="notation:Node" xmi:id="_if4iAGnXEeqjJrhLlsOzgw" type="2002" element="_iGqwwGnXEeqjJrhLlsOzgw">
+          <children xmi:type="notation:Node" xmi:id="_ihazEGnXEeqjJrhLlsOzgw" type="5006"/>
+          <children xmi:type="notation:Node" xmi:id="_ihd2YGnXEeqjJrhLlsOzgw" type="7001">
+            <styles xmi:type="notation:SortingStyle" xmi:id="_ihd2YWnXEeqjJrhLlsOzgw"/>
+            <styles xmi:type="notation:FilteringStyle" xmi:id="_ihd2YmnXEeqjJrhLlsOzgw"/>
+          </children>
+          <styles xmi:type="notation:ShapeStyle" xmi:id="_if4iAWnXEeqjJrhLlsOzgw" fontName="Segoe UI" fontHeight="8"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_if4iAmnXEeqjJrhLlsOzgw"/>
+        </children>
+        <styles xmi:type="notation:DiagramStyle" xmi:id="_ifmOIGnXEeqjJrhLlsOzgw"/>
+      </data>
+    </ownedAnnotationEntries>
+    <ownedDiagramElements xmi:type="diagram:DNodeContainer" uid="_iGqwwGnXEeqjJrhLlsOzgw" name="&lt;&lt;System>>&#xA;New System">
+      <target xmi:type="system:System" href="test-data/casestudy2/non-optimized/casestudy2.system#_eAp9oGnXEeqjJrhLlsOzgw"/>
+      <semanticElements xmi:type="system:System" href="test-data/casestudy2/non-optimized/casestudy2.system#_eAp9oGnXEeqjJrhLlsOzgw"/>
+      <ownedStyle xmi:type="diagram:FlatContainerStyle" uid="_iG6BUGnXEeqjJrhLlsOzgw" borderSize="1" borderSizeComputationExpression="1" foregroundColor="255,255,255">
+        <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/org.palladiosimulator.editors.sirius.assembly/description/assembly.odesign#//@ownedViewpoints[name='Assembly']/@ownedRepresentations[name='Assembly%20Diagram']/@defaultLayer/@containerMappings[name='ComposedProvidingRequiringEntity%20Node']/@style"/>
+      </ownedStyle>
+      <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/org.palladiosimulator.editors.sirius.assembly/description/assembly.odesign#//@ownedViewpoints[name='Assembly']/@ownedRepresentations[name='Assembly%20Diagram']/@defaultLayer/@containerMappings[name='ComposedProvidingRequiringEntity%20Node']"/>
+    </ownedDiagramElements>
+    <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/org.palladiosimulator.editors.sirius.assembly/description/assembly.odesign#//@ownedViewpoints[name='Assembly']/@ownedRepresentations[name='Assembly%20Diagram']"/>
+    <filterVariableHistory xmi:type="diagram:FilterVariableHistory" uid="_iC1ZoGnXEeqjJrhLlsOzgw"/>
+    <activatedLayers xmi:type="description_1:Layer" href="platform:/plugin/org.palladiosimulator.editors.sirius.assembly/description/assembly.odesign#//@ownedViewpoints[name='Assembly']/@ownedRepresentations[name='Assembly%20Diagram']/@defaultLayer"/>
+    <activatedLayers xmi:type="description_1:AdditionalLayer" href="platform:/plugin/org.palladiosimulator.editors.sirius.assembly/description/assembly.odesign#//@ownedViewpoints[name='Assembly']/@ownedRepresentations[name='Assembly%20Diagram']/@additionalLayers[name='QoS']"/>
+    <target xmi:type="system:System" href="test-data/casestudy2/non-optimized/casestudy2.system#_eAp9oGnXEeqjJrhLlsOzgw"/>
   </diagram:DSemanticDiagram>
 </xmi:XMI>

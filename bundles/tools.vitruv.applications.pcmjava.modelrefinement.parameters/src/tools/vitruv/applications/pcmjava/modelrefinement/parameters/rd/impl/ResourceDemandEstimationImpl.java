@@ -48,6 +48,7 @@ public class ResourceDemandEstimationImpl implements ResourceDemandEstimation, R
 	private final LoopPrediction loopEstimation;
 	private final BranchPrediction branchEstimation;
 	private final boolean withOptimization;
+	private OptimizationConfig config;
 
 	/**
 	 * Initializes a new instance of {@link ResourceDemandEstimationImpl}.
@@ -56,12 +57,13 @@ public class ResourceDemandEstimationImpl implements ResourceDemandEstimation, R
 	 * @param branchPrediction The branch prediction.
 	 */
 	public ResourceDemandEstimationImpl(final LoopPrediction loopPrediction, final BranchPrediction branchPrediction,
-			boolean withOpt) {
+			boolean withOpt, OptimizationConfig config) {
 		this.modelCache = new HashMap<>();
 		this.parametricDependencyEstimationStrategy = new WekaParametricDependencyEstimationStrategy();
 		this.loopEstimation = loopPrediction;
 		this.branchEstimation = branchPrediction;
 		this.withOptimization = withOpt;
+		this.config = config;
 	}
 
 	@Override
@@ -85,33 +87,31 @@ public class ResourceDemandEstimationImpl implements ResourceDemandEstimation, R
 	}
 
 	@Override
-    public void update(final Repository pcmModel, final ServiceCallDataSet serviceCalls,
-            final ResourceUtilizationDataSet resourceUtilizations, final ResponseTimeDataSet responseTimes) {
+	public void update(final Repository pcmModel, final ServiceCallDataSet serviceCalls,
+			final ResourceUtilizationDataSet resourceUtilizations, final ResponseTimeDataSet responseTimes) {
 
-        Set<String> internalActionsToEstimate = responseTimes.getInternalActionIds();
+		Set<String> internalActionsToEstimate = responseTimes.getInternalActionIds();
 
-        if (internalActionsToEstimate.isEmpty()) {
-            LOGGER.info("No internal action records in data set. So resource demand estimation is skipped.");
-        } else {
-            ResourceUtilizationEstimation resourceUtilizationEstimation = new ResourceUtilizationEstimationImpl(
-                    internalActionsToEstimate, pcmModel, serviceCalls, this.loopEstimation, this.branchEstimation, this);
+		if (internalActionsToEstimate.isEmpty()) {
+			LOGGER.info("No internal action records in data set. So resource demand estimation is skipped.");
+		} else {
+			ResourceUtilizationEstimation resourceUtilizationEstimation = new ResourceUtilizationEstimationImpl(
+					internalActionsToEstimate, pcmModel, serviceCalls, this.loopEstimation, this.branchEstimation,
+					this);
 
-            ResourceUtilizationDataSet remainingResourceUtilization = resourceUtilizationEstimation
-                    .estimateRemainingUtilization(resourceUtilizations);
+			ResourceUtilizationDataSet remainingResourceUtilization = resourceUtilizationEstimation
+					.estimateRemainingUtilization(resourceUtilizations);
 
-            LibredeResourceDemandEstimation estimation = new LibredeResourceDemandEstimation(
-                    this.parametricDependencyEstimationStrategy, remainingResourceUtilization, responseTimes, serviceCalls);
+			LibredeResourceDemandEstimation estimation = new LibredeResourceDemandEstimation(
+					this.parametricDependencyEstimationStrategy, remainingResourceUtilization, responseTimes,
+					serviceCalls);
 
-            Map<String, Map<String, ResourceDemandModel>> newModels = estimation.estimateAll();
+			Map<String, Map<String, ResourceDemandModel>> newModels = estimation.estimateAll();
 
-            this.modelCache.putAll(newModels);
-//            newModels.forEach((k,v) -> {
-//            	System.out.println("Internal action: " + k);
-//            	v.forEach((r,m) -> System.out.println("Resource id: " + r + "\n" + m.getDataSet().getDataSet().toString()));
-//            			});
-        }
-        this.applyEstimations(pcmModel);
-    }
+			this.modelCache.putAll(newModels);
+		}
+		this.applyEstimations(pcmModel);
+	}
 
 	private void applyEstimations(final Repository pcmModel) {
 		List<InternalAction> internalActions = PcmUtils.getObjects(pcmModel, InternalAction.class);
@@ -127,6 +127,7 @@ public class ResourceDemandEstimationImpl implements ResourceDemandEstimation, R
 	}
 
 	private void applyModel(final String internalActionId, final ParametricResourceDemand rd) {
+		System.out.println(internalActionId);
 		Map<String, ResourceDemandModel> internalActionModel = this.modelCache.get(internalActionId);
 		if (internalActionModel == null) {
 			LOGGER.warn("A estimation for internal action with id " + internalActionId
@@ -145,13 +146,15 @@ public class ResourceDemandEstimationImpl implements ResourceDemandEstimation, R
 					+ resourceId + " was not found. Nothing is set for this resource demand.");
 			return;
 		}
-		if (rdModel.getError() >= 10 && withOptimization) {
+		
+		if (rdModel.getError() >= 0.01 && withOptimization && rdModel.getWekaDataSet().getAttributes().size() > 1) {
 			ParameterToOptimize rdToOpt = new ParameterToOptimize(internalActionId, rdModel);
-			OptimizationConfig config = new OptimizationConfig(10000, 2, 25, OptimizationMode.Basic, 5, 0.01, false);
 			Optimization op = new Optimization(rdToOpt, config);
 			op.start();
+			op.printStats();
 			stoEx = op.getOptimizedStochasticExpression();
 		} else {
+			System.out.println("ERROR: " + rdModel.getError());
 			stoEx = rdModel.getResourceDemandStochasticExpression();
 		}
 		stoEx = Utils.replaceUnderscoreWithDot(stoEx);

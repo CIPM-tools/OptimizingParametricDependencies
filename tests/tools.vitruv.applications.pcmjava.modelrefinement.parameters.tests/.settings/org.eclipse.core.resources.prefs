@@ -1,6 +1,12 @@
 eclipse.preferences.version=1
-encoding//test-data/casestudy/results/Complete/default.system=UTF-8
 encoding//test-data/casestudy/results/Complete/default.system_diagram=UTF-8
+encoding//test-data/casestudy2/default.repository_diagram=UTF-8
+encoding//test-data/casestudy2/nonOptimized/default.system=UTF-8
+encoding//test-data/casestudy2/nonOptimized/default.system_diagram=UTF-8
+encoding//test-data/casestudy2/nonOptimized/result.repository_diagram=UTF-8
+encoding//test-data/casestudy2/optimized/default.usagemodel=UTF-8
+encoding//test-data/casestudy2/optimized/default.usagemodel_diagram=UTF-8
+encoding//test-data/casestudy2/optimized/result.repository_diagram=UTF-8
 encoding//test-data/simple-iteration/temp.repository_diagram=UTF-8
 encoding//test-data/simple2/default.allocation=UTF-8
 encoding//test-data/simple2/default.allocation_diagram=UTF-8

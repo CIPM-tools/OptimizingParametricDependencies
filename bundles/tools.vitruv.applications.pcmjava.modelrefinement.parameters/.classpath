@@ -9,7 +9,11 @@
 	<classpathentry exported="true" kind="lib" path="target/dependency/arpack_combined_all.jar"/>
 	<classpathentry exported="true" kind="lib" path="target/dependency/bounce.jar"/>
 	<classpathentry exported="true" kind="lib" path="target/dependency/colt.jar"/>
-	<classpathentry exported="true" kind="lib" path="target/dependency/commons-math3.jar"/>
+	<classpathentry exported="true" kind="lib" path="target/dependency/commons-math3.jar">
+		<accessrules>
+			<accessrule kind="accessible" pattern="org/apache/commons/math3/ml/distance/*"/>
+		</accessrules>
+	</classpathentry>
 	<classpathentry exported="true" kind="lib" path="target/dependency/concurrent.jar"/>
 	<classpathentry exported="true" kind="lib" path="target/dependency/core.jar"/>
 	<classpathentry exported="true" kind="lib" path="target/dependency/jackson-annotations.jar"/>

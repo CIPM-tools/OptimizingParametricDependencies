@@ -1,20 +1,20 @@
 package tools.vitruv.applications.pcmjava.modelrefinement.parameters.monitoring.records;
 
 import java.nio.BufferOverflowException;
+import java.nio.BufferUnderflowException;
+import java.nio.ByteBuffer;
 
 import kieker.common.exception.RecordInstantiationException;
 import kieker.common.record.AbstractMonitoringRecord;
 import kieker.common.record.IMonitoringRecord;
-import kieker.common.record.io.IValueDeserializer;
 import kieker.common.record.io.IValueSerializer;
 import kieker.common.util.registry.IRegistry;
 
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.monitoring.records.ServiceContextRecord;
 
-/**
- * @author Generic Kieker API compatibility: Kieker 1.13.0
+/***
  * 
- * @since 1.13
+ * @author Generic Kieker API compatibility:Kieker 1.10.0**@since 1.10
  */
 public class ServiceCallRecord extends AbstractMonitoringRecord
         implements IMonitoringRecord.Factory, IMonitoringRecord.BinaryFactory, ServiceContextRecord {
@@ -26,7 +26,8 @@ public class ServiceCallRecord extends AbstractMonitoringRecord
             + TYPE_SIZE_STRING // ServiceCallRecord.callerServiceExecutionId
             + TYPE_SIZE_STRING // ServiceCallRecord.callerId
             + TYPE_SIZE_LONG // ServiceCallRecord.entryTime
-            + TYPE_SIZE_LONG; // ServiceCallRecord.exitTime
+            + TYPE_SIZE_LONG // ServiceCallRecord.exitTime
+            + TYPE_SIZE_STRING; // ServiceCallRecord.returnValue
 
     public static final Class<?>[] TYPES = {
             String.class, // RecordWithSession.sessionId
@@ -37,6 +38,7 @@ public class ServiceCallRecord extends AbstractMonitoringRecord
             String.class, // ServiceCallRecord.callerId
             long.class, // ServiceCallRecord.entryTime
             long.class, // ServiceCallRecord.exitTime
+            String.class, // ServiceCallRecord.returnValue
     };
 
     /** default constants. */
@@ -46,7 +48,8 @@ public class ServiceCallRecord extends AbstractMonitoringRecord
     public static final String PARAMETERS = "<not set>";
     public static final String CALLER_SERVICE_EXECUTION_ID = "<not set>";
     public static final String CALLER_ID = "<not set>";
-    private static final long serialVersionUID = -7293080011317886261L;
+    public static final String RETURN_VALUE = "<not set>";
+    private static final long serialVersionUID = 6294390637095843823L;
 
     /** property name array. */
     private static final String[] PROPERTY_NAMES = {
@@ -58,6 +61,7 @@ public class ServiceCallRecord extends AbstractMonitoringRecord
             "callerId",
             "entryTime",
             "exitTime",
+            "returnValue",
     };
 
     /** property declarations. */
@@ -69,10 +73,11 @@ public class ServiceCallRecord extends AbstractMonitoringRecord
     private final String callerId;
     private final long entryTime;
     private final long exitTime;
+    private final String returnValue;
 
     /**
      * Creates a new instance of this class using the given parameters.
-     * 
+     *
      * @param sessionId
      *            sessionId
      * @param serviceExecutionId
@@ -85,16 +90,16 @@ public class ServiceCallRecord extends AbstractMonitoringRecord
      *            callerServiceExecutionId
      * @param callerId
      *            callerId
-     * @param assemblyId
-     *            assemblyId
      * @param entryTime
      *            entryTime
      * @param exitTime
      *            exitTime
+     * @param returnValue
+     *            returnValue
      */
     public ServiceCallRecord(final String sessionId, final String serviceExecutionId, final String serviceId,
-            final String parameters, final String callerServiceExecutionId, final String callerId,
-            final long entryTime, final long exitTime) {
+            final String parameters, final String callerServiceExecutionId, final String callerId, final long entryTime,
+            final long exitTime, final String returnValue) {
         this.sessionId = sessionId == null ? SESSION_ID : sessionId;
         this.serviceExecutionId = serviceExecutionId == null ? SERVICE_EXECUTION_ID : serviceExecutionId;
         this.serviceId = serviceId == null ? SERVICE_ID : serviceId;
@@ -104,12 +109,13 @@ public class ServiceCallRecord extends AbstractMonitoringRecord
         this.callerId = callerId == null ? CALLER_ID : callerId;
         this.entryTime = entryTime;
         this.exitTime = exitTime;
+        this.returnValue = returnValue == null ? RETURN_VALUE : returnValue;
     }
 
     /**
      * This constructor converts the given array into a record. It is recommended to use the array which is the result
      * of a call to {@link #toArray()}.
-     * 
+     *
      * @param values
      *            The values for the record.
      *
@@ -126,11 +132,12 @@ public class ServiceCallRecord extends AbstractMonitoringRecord
         this.callerId = (String) values[5];
         this.entryTime = (Long) values[6];
         this.exitTime = (Long) values[7];
+        this.returnValue = (String) values[8];
     }
 
     /**
      * This constructor uses the given array to initialize the fields of this record.
-     * 
+     *
      * @param values
      *            The values for the record.
      * @param valueTypes
@@ -149,23 +156,34 @@ public class ServiceCallRecord extends AbstractMonitoringRecord
         this.callerId = (String) values[5];
         this.entryTime = (Long) values[6];
         this.exitTime = (Long) values[7];
+        this.returnValue = (String) values[8];
     }
 
     /**
-     * @param deserializer
-     *            The deserializer to use
-     * @throws RecordInstantiationException
-     *             when the record could not be deserialized
+     * This constructor converts the given buffer into a record.
+     *
+     * @param buffer
+     *            The bytes for the record
+     * @param stringRegistry
+     *            The string registry for deserialization
+     *
+     * @throws BufferUnderflowException
+     *             if buffer not sufficient
+     *
+     * @deprecated to be removed in 1.15
      */
-    public ServiceCallRecord(final IValueDeserializer deserializer) throws RecordInstantiationException {
-        this.sessionId = deserializer.getString();
-        this.serviceExecutionId = deserializer.getString();
-        this.serviceId = deserializer.getString();
-        this.parameters = deserializer.getString();
-        this.callerServiceExecutionId = deserializer.getString();
-        this.callerId = deserializer.getString();
-        this.entryTime = deserializer.getLong();
-        this.exitTime = deserializer.getLong();
+    @Deprecated
+    public ServiceCallRecord(final ByteBuffer buffer, final IRegistry<String> stringRegistry)
+            throws BufferUnderflowException {
+        this.sessionId = stringRegistry.get(buffer.getInt());
+        this.serviceExecutionId = stringRegistry.get(buffer.getInt());
+        this.serviceId = stringRegistry.get(buffer.getInt());
+        this.parameters = stringRegistry.get(buffer.getInt());
+        this.callerServiceExecutionId = stringRegistry.get(buffer.getInt());
+        this.callerId = stringRegistry.get(buffer.getInt());
+        this.entryTime = buffer.getLong();
+        this.exitTime = buffer.getLong();
+        this.returnValue = stringRegistry.get(buffer.getInt());
     }
 
     /**
@@ -185,6 +203,7 @@ public class ServiceCallRecord extends AbstractMonitoringRecord
                 this.getCallerId(),
                 this.getEntryTime(),
                 this.getExitTime(),
+                this.getReturnValue(),
         };
     }
 
@@ -199,22 +218,26 @@ public class ServiceCallRecord extends AbstractMonitoringRecord
         stringRegistry.get(this.getParameters());
         stringRegistry.get(this.getCallerServiceExecutionId());
         stringRegistry.get(this.getCallerId());
+        stringRegistry.get(this.getReturnValue());
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @deprecated since 1.13 to be removed in 1.15
      */
-    @Override
-    public void serialize(final IValueSerializer serializer) throws BufferOverflowException {
-        // super.serialize(serializer);
-        serializer.putString(this.getSessionId());
-        serializer.putString(this.getServiceExecutionId());
-        serializer.putString(this.getServiceId());
-        serializer.putString(this.getParameters());
-        serializer.putString(this.getCallerServiceExecutionId());
-        serializer.putString(this.getCallerId());
-        serializer.putLong(this.getEntryTime());
-        serializer.putLong(this.getExitTime());
+    @Deprecated
+    public void writeBytes(final ByteBuffer buffer, final IRegistry<String> stringRegistry)
+            throws BufferOverflowException {
+        buffer.putInt(stringRegistry.get(this.getSessionId()));
+        buffer.putInt(stringRegistry.get(this.getServiceExecutionId()));
+        buffer.putInt(stringRegistry.get(this.getServiceId()));
+        buffer.putInt(stringRegistry.get(this.getParameters()));
+        buffer.putInt(stringRegistry.get(this.getCallerServiceExecutionId()));
+        buffer.putInt(stringRegistry.get(this.getCallerId()));
+        buffer.putLong(this.getEntryTime());
+        buffer.putLong(this.getExitTime());
+        buffer.putInt(stringRegistry.get(this.getReturnValue()));
     }
 
     /**
@@ -243,12 +266,23 @@ public class ServiceCallRecord extends AbstractMonitoringRecord
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @deprecated to be rmeoved in 1.15
      */
     @Override
     @Deprecated
     public void initFromArray(final Object[] values) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @deprecated to be rmeoved in 1.15
+     */
+    @Deprecated
+    public void initFromBytes(final ByteBuffer buffer, final IRegistry<String> stringRegistry)
+            throws BufferUnderflowException {
         throw new UnsupportedOperationException();
     }
 
@@ -295,6 +329,9 @@ public class ServiceCallRecord extends AbstractMonitoringRecord
         if (this.getExitTime() != castedRecord.getExitTime()) {
             return false;
         }
+        if (!this.getReturnValue().equals(castedRecord.getReturnValue())) {
+            return false;
+        }
 
         return true;
     }
@@ -331,4 +368,20 @@ public class ServiceCallRecord extends AbstractMonitoringRecord
         return this.exitTime;
     }
 
+    public final String getReturnValue() {
+        return this.returnValue;
+    }
+
+    @Override
+    public void serialize(IValueSerializer arg0) throws BufferOverflowException {
+        arg0.putString(this.sessionId);
+        arg0.putString(this.serviceExecutionId);
+        arg0.putString(this.serviceId);
+        arg0.putString(this.parameters);
+        arg0.putString(this.callerServiceExecutionId);
+        arg0.putString(this.callerId);
+        arg0.putLong(this.entryTime);
+        arg0.putLong(this.exitTime);
+        arg0.putString(this.returnValue);
+    }
 }

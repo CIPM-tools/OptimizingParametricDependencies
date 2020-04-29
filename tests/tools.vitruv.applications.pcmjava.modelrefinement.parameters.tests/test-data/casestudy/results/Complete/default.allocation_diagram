@@ -17,7 +17,7 @@
       </children>
     </children>
     <element xmi:type="resourceenvironment:ResourceContainer" href="default.resourceenvironment#_4k3YUOOIEeixdd9nKHjxEQ"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Wwc7QeOLEeiRhPWGEU1Wpw" width="256" height="291"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Wwc7QeOLEeiRhPWGEU1Wpw" width="591" height="471"/>
   </children>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_8liGgeOKEeixdd9nKHjxEQ"/>
   <element xmi:type="allocation:Allocation" href="default.allocation#_8lhfcOOKEeixdd9nKHjxEQ"/>

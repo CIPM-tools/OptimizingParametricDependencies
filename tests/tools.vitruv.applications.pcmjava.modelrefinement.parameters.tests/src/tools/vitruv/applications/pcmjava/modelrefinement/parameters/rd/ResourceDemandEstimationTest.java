@@ -16,6 +16,7 @@ import tools.vitruv.applications.pcmjava.modelrefinement.parameters.LoggingUtil;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.MonitoringDataSet;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.ServiceParametersUtil;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.data.SimpleTestData;
+import tools.vitruv.applications.pcmjava.modelrefinement.parameters.optimization.genetic.OptimizationConfig;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.rd.impl.ResourceDemandEstimationImpl;
 
 public class ResourceDemandEstimationTest {
@@ -26,7 +27,7 @@ public class ResourceDemandEstimationTest {
         Repository pcmModel = SimpleTestData.loadPcmModel();
 
         ResourceDemandEstimationImpl rdEstimation = new ResourceDemandEstimationImpl(new LoopPredictionMock(),
-                new BranchPredictionMock(), false);
+                new BranchPredictionMock(), false, OptimizationConfig.EMPTY);
         rdEstimation.update(pcmModel, reader.getServiceCalls(), reader.getResourceUtilizations(),
                 reader.getResponseTimes());
 

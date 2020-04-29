@@ -38,13 +38,20 @@ public class ArgumentEstimationImpl implements ArgumentEstimation {
 	// service ID to <parameter name, parameter model>
 	private final Map<String, Map<String, ArgumentModel>> modelCache;
 	private final boolean withOptimization;
+	private final boolean withFeatureSelection;
+	private final boolean withReturnValue;
+	private final OptimizationConfig config;
 
-	public ArgumentEstimationImpl(boolean withOpt) {
-		this(ThreadLocalRandom.current(),withOpt);
+	public ArgumentEstimationImpl(boolean withOpt, boolean withFeatureSelection, boolean withReturnValue, OptimizationConfig config) {
+		this(ThreadLocalRandom.current(), withOpt, withFeatureSelection, withReturnValue, config);
 	}
 
-	public ArgumentEstimationImpl(final Random random, boolean withOpt) {
+	public ArgumentEstimationImpl(final Random random, boolean withOpt, boolean withFeatureSelection, boolean withReturnValue, OptimizationConfig config) {
 		this.withOptimization = withOpt;
+		this.withFeatureSelection = withFeatureSelection;
+		this.withReturnValue = withReturnValue;
+		
+		this.config = config;
 		this.modelCache = new HashMap<>();
 	}
 
@@ -58,7 +65,7 @@ public class ArgumentEstimationImpl implements ArgumentEstimation {
 	public void update(Repository pcm, ServiceCallDataSet externalCallRecords) {
 		List<ExternalCallAction> externalCallActions = PcmUtils.getObjects(pcm, ExternalCallAction.class);
 		WekaArgumentsModelEstimation estimation = new WekaArgumentsModelEstimation(externalCallRecords, pcm,
-				externalCallActions);
+				externalCallActions, withFeatureSelection, withReturnValue);
 
 		Map<String, Map<String, ArgumentModel>> argumentModels = estimation.estimateAll();
 		for (ServiceCall record : externalCallRecords.getServiceCalls())
@@ -85,8 +92,7 @@ public class ArgumentEstimationImpl implements ArgumentEstimation {
 	 */
 	private void applyModel(final ExternalCallAction externalCall) {
 		// get the corresponding estimation model
-		Map<String, ArgumentModel> parameterModels = this.modelCache
-				.get(externalCall.getId());
+		Map<String, ArgumentModel> parameterModels = this.modelCache.get(externalCall.getId());
 		if (parameterModels == null) {
 			LOGGER.warn("A estimation for the parameters of external call with id " + externalCall.getId()
 					+ " was not found.");
@@ -94,22 +100,27 @@ public class ArgumentEstimationImpl implements ArgumentEstimation {
 		}
 		for (Entry<String, ArgumentModel> parModel : parameterModels.entrySet()) {
 			String parameterName = parModel.getKey();
-			String stoEx;			
+			String stoEx;
 
-
-			// for now only numeric models with error >= 10% are optimized
+			// for now only numeric models with error >= 0.1 are optimized
 			if (parModel.getValue().getClass().getSimpleName().equals("WekaNumericArgumentModel")
-					&& parModel.getValue().getError() >= 10 && withOptimization) {
-				System.out.println("Initial error for " + parameterName + ": "+ parModel.getValue().getError());
+					&& parModel.getValue().getError() >= 0.1 && withOptimization
+					&& parModel.getValue().getWekaDataSet().getAttributes().size() > 1) {
+				System.out.println("Initial error for " + parameterName + ": " + parModel.getValue().getError());
 				System.out.println("->opt");
 				stoEx = optimize(parModel.getKey(), parModel.getValue());
 
 			} else {
-				stoEx = parModel.getValue().getStochasticExpression();					
+				System.out.println("Initial error for " + parameterName + ": " + parModel.getValue().getError());
+				stoEx = parModel.getValue().getStochasticExpression();
 			}
 			
-			stoEx = Utils.replaceUnderscoreWithDot(stoEx);		
-			System.out.println("Final stoEx for " + parameterName + ": "+ stoEx);
+			if (parModel.getValue().isIntegerOnly()) {
+				stoEx = Utils.replaceDoubles(stoEx);
+			}
+			
+			stoEx = Utils.replaceUnderscoreWithDot(stoEx);
+			System.out.println("Final stoEx for " + parameterName + ": " + stoEx);
 			VariableUsage varUsage = PcmUtils.createVariableUsage(parameterName, VariableCharacterisationType.VALUE,
 					stoEx);
 			externalCall.getInputVariableUsages__CallAction().add(varUsage);
@@ -125,12 +136,11 @@ public class ArgumentEstimationImpl implements ArgumentEstimation {
 	 */
 	private String optimize(String parameterName, ArgumentModel model) {
 		ParameterToOptimize spToOpt = new ParameterToOptimize(parameterName, model);
-		OptimizationConfig config = new OptimizationConfig(10000, 2, 25, OptimizationMode.LogExp, 5, 0.01, false);
 		Optimization op = new Optimization(spToOpt, config);
 		op.start();
 		System.out.println("Optimized StoEx for parameter: " + parameterName + ": "
 				+ Utils.replaceUnderscoreWithDot(op.getOptimizedStochasticExpression()));
-		//op.printTree();
+		// op.printTree();
 		op.printStats();
 		return op.getOptimizedStochasticExpression();
 	}

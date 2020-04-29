@@ -21,6 +21,7 @@ import tools.vitruv.applications.pcmjava.modelrefinement.parameters.branch.Branc
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.branch.BranchEstimation;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.branch.BranchPrediction;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.util.PcmUtils;
+import tools.vitruv.applications.pcmjava.modelrefinement.parameters.util.Utils;
 
 /**
  * Implements branch estimation and prediction by using {@link TreeWekaBranchModelEstimation}.
@@ -127,6 +128,7 @@ public class BranchEstimationImpl implements BranchEstimation, BranchPrediction 
             return;
         }        
         String stoEx = branchModel.getBranchStochasticExpression(branch.getId());
+        stoEx = Utils.replaceUnderscoreWithDot(stoEx);
         PCMRandomVariable randomVariable = CoreFactory.eINSTANCE.createPCMRandomVariable();
         randomVariable.setSpecification(stoEx);
         branch.setBranchCondition_GuardedBranchTransition(randomVariable);

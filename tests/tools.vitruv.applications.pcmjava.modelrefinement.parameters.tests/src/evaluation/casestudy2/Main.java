@@ -1,14 +1,11 @@
 package evaluation.casestudy2;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
-import evaluation.utils.CsvWriter;
 import kieker.monitoring.core.controller.MonitoringController;
 import kieker.monitoring.sampler.sigar.ISigarSamplerFactory;
 import kieker.monitoring.sampler.sigar.SigarSamplerFactory;
@@ -16,7 +13,6 @@ import kieker.monitoring.sampler.sigar.samplers.CPUsDetailedPercSampler;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.monitoring.KiekerMonitoringRecordsWriter;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.monitoring.MonitoringRecordsCache;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.monitoring.ThreadMonitoringController;
-import tools.vitruv.applications.pcmjava.modelrefinement.parameters.util.Utils;
 
 public class Main {
 
@@ -42,15 +38,16 @@ public class Main {
 
         ThreadMonitoringController.setMonitoringRecordsWriter(writer);
 
-        evaluationRun(25, 10, 5, "session-1");
+        evaluationRun(50,0,10,"session-1");
 
         System.out.println("Finished performance monitoring.");
     }
 
     private static void evaluationRun(int iterations, int thinkTimeMillis, int population, String name) throws Exception {
         Common c = new Common(name, Mode.Nothing);
-        ThreadMonitoringController.setSessionId(c.name);
+        
 
+        ThreadMonitoringController.setSessionId(c.name);
         evaluationThreadedRun(c,iterations, thinkTimeMillis, population);
 
         if (cache.getItemsCount() > CACHE_SIZE) {
@@ -87,16 +84,13 @@ public class Main {
 
                 B b = new B(c);
                 A a = new A(b, c);
-                List<String> mylist = new ArrayList<String>();
 
                 for (int k = 0; k < iterations; k++) {
 
                     int i = rand.nextInt(10);
+                    int j = 1+rand.nextInt(3);
                     boolean bool = rand.nextBoolean();
-                    String randomStr = Utils.generateRandomString(10);
-                    mylist.add(randomStr);
-
-                    a.methodA(i, i+1, bool, mylist);
+                    a.methodA(i, j, bool);
 
                     if (thinkTimeMillis > 0) {
                         Thread.sleep(thinkTimeMillis);
@@ -104,7 +98,7 @@ public class Main {
 
                     if (k % 100 == 0) {
                         System.out.println(
-                                "Next step thread: " + Thread.currentThread().getId() + ": " + String.valueOf(k));
+                                "Iteration: " + String.valueOf(k));
                     }
                 }
             }

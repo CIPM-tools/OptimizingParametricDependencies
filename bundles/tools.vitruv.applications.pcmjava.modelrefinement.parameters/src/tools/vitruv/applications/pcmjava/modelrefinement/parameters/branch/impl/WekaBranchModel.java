@@ -36,8 +36,8 @@ public class WekaBranchModel implements BranchModel {
 		return classifier;
 	}
 
-	public WekaDataSet<String> getDataSet() {
-		return dataset;
+	public WekaDataSet<String> getWekaDataSet() {
+		return this.dataset;
 	}
 
 	@Override
@@ -155,5 +155,10 @@ public class WekaBranchModel implements BranchModel {
 	@Override
 	public String getStochasticExpression() {
 		return null;
+	}
+
+	@Override
+	public Instances getInstancesDataSet() {
+		return this.dataset.getDataSet();
 	}
 }

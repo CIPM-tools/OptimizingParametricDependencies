@@ -10,6 +10,8 @@ public class EvaluationData {
     private File usagemodel;
     private File allocation;
     private File resourceenv;
+    private File monitorRepository;
+    private File measuringPoint;
 
     private File validationFolder;
 
@@ -77,6 +79,22 @@ public class EvaluationData {
 
     public void setOutputJsonFile(File outputJsonFile) {
         this.outputJsonFile = outputJsonFile;
+    }
+
+    public File getMonitorRepository() {
+        return monitorRepository;
+    }
+
+    public void setMonitorRepository(File monitorRepository) {
+        this.monitorRepository = monitorRepository;
+    }
+
+    public File getMeasuringPoint() {
+        return measuringPoint;
+    }
+
+    public void setMeasuringPoint(File measuringPoint) {
+        this.measuringPoint = measuringPoint;
     }
 
 }

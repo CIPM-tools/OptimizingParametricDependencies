@@ -345,12 +345,12 @@ public class GenerateFunctionsData {
         BranchModel model = estimation.estimate(Common.DEFAULT_MODEL_ID);
         if (model instanceof WekaBranchModel) {
             WekaBranchModel branchModel = (WekaBranchModel) model;
-            Evaluation evaluation = new Evaluation(branchModel.getDataSet().getDataSet());
-            evaluation.crossValidateModel(branchModel.getClassifier(), branchModel.getDataSet().getDataSet(), 10, new Random(0));
+            Evaluation evaluation = new Evaluation(branchModel.getWekaDataSet().getDataSet());
+            evaluation.crossValidateModel(branchModel.getClassifier(), branchModel.getWekaDataSet().getDataSet(), 10, new Random(0));
 
             System.out.println(evaluation.toSummaryString());
 
-            int index = branchModel.getDataSet().getDataSet().classAttribute().indexOfValue(BRANCH_TRANSITION_ID1);
+            int index = branchModel.getWekaDataSet().getDataSet().classAttribute().indexOfValue(BRANCH_TRANSITION_ID1);
             double tp = evaluation.numTruePositives(index);
             double tn = evaluation.numTrueNegatives(index);
             double fp = evaluation.numFalsePositives(index);
@@ -412,8 +412,8 @@ public class GenerateFunctionsData {
     private static void loopEvaluation(MockMonitoringDataSet dataSet) throws Exception {
         WekaLoopModelEstimation estimation = new WekaLoopModelEstimation(dataSet.getServiceCalls(), dataSet.getLoops());
         WekaLoopModel loopModel = (WekaLoopModel) estimation.estimate(Common.DEFAULT_MODEL_ID);
-        Evaluation evaluation = new Evaluation(loopModel.getDataSet().getDataSet());
-        evaluation.crossValidateModel(loopModel.getClassifier(), loopModel.getDataSet().getDataSet(), 10, new Random(0));
+        Evaluation evaluation = new Evaluation(loopModel.getWekaDataSet().getDataSet());
+        evaluation.crossValidateModel(loopModel.getClassifier(), loopModel.getWekaDataSet().getDataSet(), 10, new Random(0));
         System.out.println(evaluation.toSummaryString());
         System.out.println(loopModel.getStochasticExpression());
         // printErrors(loopModel.getClassifier(), loopModel.getDataset());
@@ -439,8 +439,8 @@ public class GenerateFunctionsData {
                 Common.DEFAULT_MODEL_ID, dataSet);
         if (model instanceof WekaResourceDemandModel) {
             WekaResourceDemandModel rdModel = (WekaResourceDemandModel) model;
-            Evaluation evaluation = new Evaluation(rdModel.getDataSet().getDataSet());
-            evaluation.crossValidateModel(rdModel.getClassifier(), rdModel.getDataSet().getDataSet(), 10, new Random(0));
+            Evaluation evaluation = new Evaluation(rdModel.getWekaDataSet().getDataSet());
+            evaluation.crossValidateModel(rdModel.getClassifier(), rdModel.getWekaDataSet().getDataSet(), 10, new Random(0));
             System.out.println(evaluation.toSummaryString());
         }
 

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" type="CompositeModel" name="default.system_diagram" measurementUnit="Pixel">
+  <children xsi:type="notation:Shape" type="2002" fontName="Segoe UI">
+    <children xsi:type="notation:DecorationNode" type="5012"/>
+    <children xsi:type="notation:DecorationNode" type="7002">
+      <children xsi:type="notation:Shape" type="3006" fontName="Segoe UI">
+        <children xsi:type="notation:DecorationNode" type="5009"/>
+        <children xsi:type="notation:Shape" type="3008" fontName="Segoe UI">
+          <children xsi:type="notation:DecorationNode" type="5008">
+            <layoutConstraint xsi:type="notation:Location" y="5"/>
+          </children>
+          <element href="result.repository#_3pfSMMjOEeiWRYm1yDC5rQ"/>
+          <layoutConstraint xsi:type="notation:Bounds"/>
+        </children>
+        <children xsi:type="notation:Shape" type="3007" fontName="Segoe UI">
+          <children xsi:type="notation:DecorationNode" type="5007">
+            <layoutConstraint xsi:type="notation:Location" y="5"/>
+          </children>
+          <element href="result.repository#_NjHzYGUlEeqsxIbJMvutiA"/>
+          <layoutConstraint xsi:type="notation:Bounds"/>
+        </children>
+        <element href="default.system#_ugIukOOJEeixdd9nKHjxEQ"/>
+        <layoutConstraint xsi:type="notation:Bounds" x="150" y="195"/>
+      </children>
+      <children xsi:type="notation:Shape" type="3006" fontName="Segoe UI">
+        <children xsi:type="notation:DecorationNode" type="5009"/>
+        <element href="default.system#_CLzA4OOKEeixdd9nKHjxEQ"/>
+        <layoutConstraint xsi:type="notation:Bounds" x="310" y="60"/>
+      </children>
+    </children>
+    <children xsi:type="notation:Shape" type="3011" fontName="Segoe UI">
+      <children xsi:type="notation:DecorationNode" type="5013">
+        <layoutConstraint xsi:type="notation:Location" x="103" y="18"/>
+      </children>
+      <element href="default.system#_CtCzoGtlEeqTfN9mRjtHzA"/>
+      <layoutConstraint xsi:type="notation:Bounds" x="-59" y="245"/>
+    </children>
+    <element href="default.system#_s1UykOOJEeixdd9nKHjxEQ"/>
+    <layoutConstraint xsi:type="notation:Bounds"/>
+  </children>
+  <styles xsi:type="notation:DiagramStyle"/>
+  <element href="default.system#_s1UykOOJEeixdd9nKHjxEQ"/>
+  <edges xsi:type="notation:Connector" type="4006" source="//@children.0/@children.2" target="//@children.0/@children.1/@children.0/@children.2">
+    <styles xsi:type="notation:FontStyle" fontName="Segoe UI"/>
+    <element href="default.system#_5L73gGtpEeqTfN9mRjtHzA"/>
+    <bendpoints xsi:type="notation:RelativeBendpoints" points="[30, 0, -140, -20]$[167, 14, -3, -6]"/>
+    <sourceAnchor xsi:type="notation:IdentityAnchor" id="(1.0,0.6166666666666667)"/>
+  </edges>
+</notation:Diagram>

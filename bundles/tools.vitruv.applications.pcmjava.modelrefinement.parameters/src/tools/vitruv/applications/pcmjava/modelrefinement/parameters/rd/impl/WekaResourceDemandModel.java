@@ -62,7 +62,7 @@ public class WekaResourceDemandModel implements ResourceDemandModel {
 
 
 	@Override
-	public WekaDataSet<Double> getDataSet() {
+	public WekaDataSet<Double> getWekaDataSet() {
 		return this.dataset;
 	}
 
@@ -79,10 +79,16 @@ public class WekaResourceDemandModel implements ResourceDemandModel {
 		try {
 			evaluation = new Evaluation(this.dataset.getDataSet());
 			evaluation.evaluateModel(this.classifier, this.dataset.getDataSet());
-			return evaluation.relativeAbsoluteError();
+			return Utils.round(evaluation.rootMeanSquaredError(),3);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return -1;
+	}
+
+
+	@Override
+	public Instances getInstancesDataSet() {
+		return this.dataset.getDataSet();
 	}
 }

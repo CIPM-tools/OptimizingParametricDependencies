@@ -165,12 +165,12 @@ public final class KiekerServiceCallRecordFilter extends AbstractFilterPlugin im
 
     private static class KiekerServiceCall implements ServiceCall {
         private final ServiceParameters parameters;
-        private final ServiceParameters returnValue=null;
+        private final ServiceParameters returnValue;
         private final ServiceCallRecord record;
 
         public KiekerServiceCall(final ServiceCallRecord record) {
             this.parameters = ServiceParameters.buildFromJson(record.getParameters());
-            //this.returnValue = ServiceParameters.buildFromJson(record.getReturnValue());
+            this.returnValue = ServiceParameters.buildFromJson(record.getReturnValue());
             this.record = record;
         }        
         

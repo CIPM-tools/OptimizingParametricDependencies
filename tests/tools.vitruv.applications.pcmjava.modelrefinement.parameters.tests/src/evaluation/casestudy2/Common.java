@@ -1,7 +1,6 @@
 package evaluation.casestudy2;
 
 import java.io.File;
-import java.util.concurrent.TimeUnit;
 
 import evaluation.dependencies.Action;
 import tools.vitruv.applications.pcmjava.modelrefinement.parameters.monitoring.ThreadMonitoringController;

@@ -19,6 +19,7 @@ Require-Bundle: org.junit,
  org.apache.commons.lang3;bundle-version="3.1.0",
  tools.vitruv.applications.pcmjava.modelrefinement.parameters.monitoring
 Import-Package: com.fasterxml.jackson.databind,
+ org.apache.commons.math3.analysis.function;version="3.2.0",
  org.apache.commons.math3.ml.distance,
  org.apache.commons.math3.stat.descriptive.moment,
  org.apache.commons.math3.stat.descriptive.rank,
