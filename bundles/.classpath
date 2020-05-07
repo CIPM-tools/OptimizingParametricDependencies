@@ -20,5 +20,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry combineaccessrules="false" kind="src" path="/tools.vitruv.applications.pcmjava.modelrefinement.parameters"/>
 	<classpathentry kind="output" path="tools.vitruv.applications.pcmjava.modelrefinement.parameters.monitoring/bin"/>
 </classpath>
